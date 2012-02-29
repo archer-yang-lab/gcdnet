@@ -40,7 +40,7 @@ plot.gcdnet = function(x, xvar = c("norm", "lambda"),
         ...)
     atdf = pretty(index)
     prettydf = trunc(approx(x = index, y = df, xout = atdf, rule = 2)$y)
-    axis(3, at = atdf, label = prettydf, cex.axis = 1, tcl = NA)
+    axis(3, at = atdf, labels = prettydf, cex.axis = 1, tcl = NA)
     if (label) {
         nnz = length(which)
         xpos = max(index)
@@ -51,8 +51,6 @@ plot.gcdnet = function(x, xvar = c("norm", "lambda"),
         }
         xpos = rep(xpos, nnz)
         ypos = beta[, ncol(beta)]
-		# axis(4, at = ypos, label = paste(which), cex =
-		#        0.80000000000000004, adj = 0)
         text(xpos, ypos, paste(which), cex = 0.5, pos = pos)
     }
 } 

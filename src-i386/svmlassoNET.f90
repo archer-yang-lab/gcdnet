@@ -68,11 +68,11 @@
 ! LICENSE: GNU GPL (version 2 or later)
 ! 
 ! AUTHORS:
-!    Yi Yang (yi@stat.umn.edu) and Hui Zou (hzou@stat.umn.edu), 
+!    Yi Yang (yiyang@umn.edu) and Hui Zou (hzou@stat.umn.edu), 
 !    School of Statistics, University of Minnesota.
 ! 
 ! REFERENCES:
-!    Yang, Y. and Zou, H (2012). An Efficient Algorithm for Computing The HHSVM and Its Generalizations.
+!    Yang, Y. and Zou, H. (2012). An Efficient Algorithm for Computing The HHSVM and Its Generalizations.
 !    Journal of Computational and Graphical Statistics. To be accepted after minor revision.
 
 
