@@ -1,3 +1,81 @@
+! --------------------------------------------------------------------------
+! svmlassoNET.f90: the GCD algorithm for squared SVM with sqaured hinge loss.
+! --------------------------------------------------------------------------
+! 
+! USAGE:
+! 
+! call svmlassoNET (lam2, nobs, nvars, x, y, jd, pf, dfmax, &
+! & pmax, nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, &
+! & nbeta, alam, npass, jerr)
+! 
+! INPUT ARGUMENTS:
+! 
+!    lam2 = regularization parameter for the quadratic penalty of the coefficients
+!    nobs = number of observations
+!    nvars = number of predictor variables
+!    x(nobs, nvars) = matrix of predictors, of dimension N * p; each row is an observation vector.
+!    y(nobs) = response variable. This argument should be a two-level factor {-1, 1} 
+!            for classification.
+!    jd(jd(1)+1) = predictor variable deletion flag
+!                  jd(1) = 0  => use all variables
+!                  jd(1) != 0 => do not use variables jd(2)...jd(jd(1)+1)
+!    pf(nvars) = relative penalties for each predictor variable
+!                pf(j) = 0 => jth variable unpenalized
+!    dfmax = limit the maximum number of variables in the model.
+!            (one of the stopping criterion)
+!    pmax = limit the maximum number of variables ever to be nonzero. 
+!           For example once beta enters the model, no matter how many 
+!           times it exits or re-enters model through the path, it will 
+!           be counted only once. 
+!    nlam = the number of lambda values
+!    flmin = user control of lambda values (>=0)
+!            flmin < 1.0 => minimum lambda = flmin*(largest lambda value)
+!            flmin >= 1.0 => use supplied lambda values (see below)
+!    ulam(nlam) = user supplied lambda values (ignored if flmin < 1.0)
+!    eps = convergence threshold for coordinate majorization descent. 
+!          Each inner coordinate majorization descent loop continues 
+!          until the relative change in any coefficient is less than eps.
+!    isd = standarization flag:
+!          isd = 0 => regression on original predictor variables
+!          isd = 1 => regression on standardized predictor variables
+!          Note: output solutions always reference original
+!                variables locations and scales.
+!    maxit = maximum number of outer-loop iterations allowed at fixed lambda value. 
+!            (suggested values, maxit = 100000)
+! 
+! OUTPUT:
+! 
+!    nalam = actual number of lambda values (solutions)
+!    b0(nalam) = intercept values for each solution
+!    beta(pmax, nalam) = compressed coefficient values for each solution
+!    ibeta(pmax) = pointers to compressed coefficients
+!    nbeta(nalam) = number of compressed coefficients for each solution
+!    alam(nalam) = lambda values corresponding to each solution
+!    npass = actual number of passes over the data for all lambda values
+!    jerr = error flag:
+!           jerr  = 0 => no error
+!           jerr > 0 => fatal error - no output returned
+!                    jerr < 7777 => memory allocation error
+!                    jerr = 7777 => all used predictors have zero variance
+!                    jerr = 10000 => maxval(vp) <= 0.0
+!           jerr < 0 => non fatal error - partial output:
+!                    Solutions for larger lambdas (1:(k-1)) returned.
+!                    jerr = -k => convergence for kth lambda value not reached
+!                           after maxit (see above) iterations.
+!                    jerr = -10000-k => number of non zero coefficients along path
+!                           exceeds pmax (see above) at kth lambda value.
+! 
+! LICENSE: GNU GPL (version 2 or later)
+! 
+! AUTHORS:
+!    Yi Yang (yi@stat.umn.edu) and Hui Zou (hzou@stat.umn.edu), 
+!    School of Statistics, University of Minnesota.
+! 
+! REFERENCES:
+!    Yang, Y. and Zou, H (2012). An Efficient Algorithm for Computing The HHSVM and Its Generalizations.
+!    Journal of Computational and Graphical Statistics. To be accepted after minor revision.
+
+
 ! --------------------------------------------------
 SUBROUTINE svmlassoNET (lam2, nobs, nvars, x, y, jd, pf, dfmax, pmax, &
 & nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, nbeta, &
