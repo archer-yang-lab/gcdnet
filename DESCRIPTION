@@ -4,8 +4,8 @@ Title: A generalized coordinate descent (GCD) algorithm for computing
         machine (HHSVM) and its generalization.
 Version: 1.0.0
 Date: 2012-2-21
-Author: Yi Yang <yi@stat.umn.edu>, Hui Zou <hzou@stat.umn.edu>
-Maintainer: Yi Yang <yi@stat.umn.edu>
+Author: Yi Yang <yiyang@umn.edu>, Hui Zou <hzou@stat.umn.edu>
+Maintainer: Yi Yang <yiyang@umn.edu>
 Depends: Matrix
 Description: This package implements a generalized coordinate descent (GCD) algorithm for computing the solution path of the hybrid Huberized support vector machine (HHSVM) and its generalization, including the elastic net penalized SVM with the squared hinge loss and the elastic net penalized logistic regression.
 License: GPL-2

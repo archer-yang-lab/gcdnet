@@ -16,7 +16,7 @@ curves, as a function of the \code{lambda} values used. This function is modifie
 \details{A plot is produced.}
 
 \author{Yi Yang and Hui Zou\cr
-Maintainer: Yi Yang  <yi@stat.umn.edu>}
+Maintainer: Yi Yang  <yiyang@umn.edu>}
 \references{
 Yang, Y. and Zou, H. (2012) 
 \emph{An Efficient Algorithm for Computing The HHSVM and Its Generalizations.}\cr
