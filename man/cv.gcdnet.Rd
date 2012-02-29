@@ -62,9 +62,9 @@ Maintainer: Yi Yang  <yi@stat.umn.edu>}
 
 \seealso{\code{\link{gcdnet}}, \code{\link{plot.cv.gcdnet}}, \code{\link{predict.cv.gcdnet}}, and \code{\link{coef.cv.gcdnet}} methods.}
 \examples{
-data(colon)
+data(FHT)
 set.seed(2011)
-cv=cv.gcdnet(colon$x,colon$y,
+cv=cv.gcdnet(FHT$x,FHT$y,
 lambda2=0.1,pred.loss="loss", nfolds=5)
 plot(cv)
 }

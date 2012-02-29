@@ -31,9 +31,9 @@ Maintainer: Yi Yang  <yi@stat.umn.edu>}
 
 \seealso{\code{\link{cv.gcdnet}}, and \code{\link{predict.cv.gcdnet}} methods.}
 \examples{
-data(colon)
+data(FHT)
 set.seed(2011)
-cv=cv.gcdnet(colon$x, colon$y, 
+cv=cv.gcdnet(FHT$x, FHT$y, 
 	lambda2 = 1,nfolds=5)
 coef(cv,s="lambda.min")
 }

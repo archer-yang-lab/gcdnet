@@ -34,12 +34,12 @@ Maintainer: Yi Yang  <yi@stat.umn.edu>}
 
 \seealso{\code{\link{cv.gcdnet}}, and \code{\link{coef.cv.gcdnet}} methods.}
 \examples{
-data(colon)
+data(FHT)
 set.seed(2011)
-cv=cv.gcdnet(colon$x, colon$y,
+cv=cv.gcdnet(FHT$x, FHT$y,
 lambda2 = 1, pred.loss="misclass", 
 lambda.factor=0.05,nfolds=5)
-pre = predict(cv$gcdnet.fit, newx = colon$x, 
+pre = predict(cv$gcdnet.fit, newx = FHT$x, 
 s = cv$lambda.1se, type = "class")
 }
 \keyword{models}
