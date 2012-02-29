@@ -1,0 +1,46 @@
+\name{predict.cv.gcdnet}
+\alias{predict.cv.gcdnet}
+\title{make predictions from a "cv.gcdnet" object.}
+\description{
+This function makes predictions from a cross-validated gcdnet model,
+using the stored \code{"gcdnet.fit"} object, and the optimal value
+chosen for \code{lambda}.
+}
+\usage{
+\method{predict}{cv.gcdnet}(object, newx, s=c("lambda.1se","lambda.min"),...)
+}
+\arguments{
+		\item{object}{fitted \code{\link{cv.gcdnet}} object.}
+		\item{newx}{matrix of new values for \code{x} at which predictions are
+		to be made. Must be a matrix. See documentation for \code{predict.gcdnet}.}
+		\item{s}{value(s) of the penalty parameter \code{lambda} at which
+		predictions are required. Default is the value \code{s="lambda.1se"} stored
+		on the CV object. Alternatively \code{s="lambda.min"} can be
+		used. If \code{s} is numeric, it is taken as the value(s) of
+		\code{lambda} to be used.}
+		\item{\dots}{not used. Other arguments to predict. } }
+\details{This function makes it easier to use the results of
+  cross-validation to make a prediction.}
+\value{The object returned depends the \dots argument which is passed on
+to the \code{\link{predict}} method for \code{\link{gcdnet}} objects.}
+
+\author{Yi Yang and Hui Zou\cr
+Maintainer: Yi Yang  <yi@stat.umn.edu>}
+\references{
+ Yi Yang and Hui Zou. \dQuote{An Efficient Algorithm for Computing HHSVM and Its Generalization}.   School of Statistics, University of Minnesota.
+
+\url{http://code.google.com/p/gcdnet/}}
+
+
+\seealso{\code{\link{cv.gcdnet}}, and \code{\link{coef.cv.gcdnet}} methods.}
+\examples{
+data(colon)
+set.seed(2011)
+cv=cv.gcdnet(colon$x, colon$y,
+lambda2 = 1, pred.loss="misclass", 
+lambda.factor=0.05,nfolds=5)
+pre = predict(cv$gcdnet.fit, newx = colon$x, 
+s = cv$lambda.1se, type = "class")
+}
+\keyword{models}
+\keyword{regression}
