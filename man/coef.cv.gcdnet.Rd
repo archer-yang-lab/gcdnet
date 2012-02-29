@@ -13,8 +13,10 @@ chosen for \code{lambda}.
 	\item{object}{fitted \code{\link{cv.gcdnet}} object.}
 	\item{s}{value(s) of the penalty parameter \code{lambda} at which
 	predictions are required. Default is the value \code{s="lambda.1se"} stored
-	on the CV \code{object}. Alternatively \code{s="lambda.min"} can be
-	used. If \code{s} is numeric, it is taken as the value(s) of
+	on the CV \code{object}, it is the largest value of \code{lambda} such that error is
+	within 1 standard error of the minimum. Alternatively \code{s="lambda.min"} can be
+	used, it is the optimal value of \code{lambda} that gives minimum
+	cross validation error \code{cvm}. If \code{s} is numeric, it is taken as the value(s) of
 	\code{lambda} to be used.}
 	\item{\dots}{not used. Other arguments to predict. } 
 }
@@ -25,9 +27,13 @@ to the \code{\link{predict}} method for \code{\link{gcdnet}} objects.}
 \author{Yi Yang and Hui Zou\cr
 Maintainer: Yi Yang  <yi@stat.umn.edu>}
 \references{
- Yi Yang and Hui Zou. \dQuote{An Efficient Algorithm for Computing HHSVM and Its Generalization}.   School of Statistics, University of Minnesota.
+Yang, Y. and Zou, H. (2012) 
+\emph{An Efficient Algorithm for Computing The HHSVM and Its Generalizations.}\cr
+\url{http://code.google.com/p/gcdnet/}\cr
 
-\url{http://code.google.com/p/gcdnet/}}
+Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized
+linear models via coordinate descent," \emph{Journal of Statistical Software, 33, 1.}\cr
+\url{http://www.jstatsoft.org/v33/i01/}}
 
 \seealso{\code{\link{cv.gcdnet}}, and \code{\link{predict.cv.gcdnet}} methods.}
 \examples{

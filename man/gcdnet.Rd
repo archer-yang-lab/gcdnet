@@ -1,7 +1,7 @@
 \name{gcdnet}
 \alias{gcdnet}
-\title{Fits the regularization paths for the HHSVM and its generalization}
-\description{Fits a regularization path for the HHSVM at a sequence of regularization parameters lambda.}
+\title{Fits the regularization paths for large margin classifiers}
+\description{Fits a regularization path for large margin classifiers at a sequence of regularization parameters lambda.}
 \usage{
 gcdnet(x, y, nlambda = 100, 
 		method = c("hhsvm", "logit", "sqsvm"),
@@ -30,13 +30,13 @@ gcdnet(x, y, nlambda = 100,
 		a decreasing sequence of \code{lambda} values than a single (small) value, if not, the program will sort user-defined \code{lambda} sequence in decreasing order automatically.}
 
 		\item{lambda2}{regularization parameter \eqn{\lambda_2}{lambda2} for the quadratic penalty of the 
-		coefficients. See details.}
+		coefficients.}
 
 		\item{pf}{penalty factor of length \eqn{p}. Separate penalty weights can be applied to each coefficient of \eqn{\beta}{beta} to allow
 		differential shrinkage. Can be 0 for some variables, which implies
 		no shrinkage, and results in that variable always being included in the
 		model. Default is 1 for all variables (and implicitly infinity for
-		variables listed in \code{exclude}). See details.}
+		variables listed in \code{exclude}).}
 
 		\item{exclude}{indices of variables to be excluded from the
 		model. Default is none. Equivalent to an infinite penalty factor.}
@@ -60,10 +60,13 @@ gcdnet(x, y, nlambda = 100,
 }
 
 \details{
+Note that the objective function in \code{gcdnet} is
+\deqn{Loss(y, X, beta))/N + lambda1 * |beta| + 0.5 * lambda2 * beta^2}
+where the penalty is a combination of L1 and L2 term. Users can specify the loss function to use, options include Huberized squared hinge loss, Squared hinge loss and logistic regression. Users can also tweak the penalty by choosing different \eqn{lambda2} and penalty factor. 
+
 For computing speed reason, if models are not converging or running slow, consider increasing \code{eps}, decreasing
 \code{nlambda}, or increasing \code{lambda.factor} before increasing
 \code{maxit}.
-
 }
 
 
@@ -83,9 +86,9 @@ An object with S3 class \code{\link{gcdnet}}.
 \author{Yi Yang and Hui Zou\cr
 Maintainer: Yi Yang  <yi@stat.umn.edu>}
 \references{
- Yi Yang and Hui Zou. \dQuote{An Efficient Algorithm for Computing HHSVM and Its Generalization}.   School of Statistics, University of Minnesota.
-
-\url{http://code.google.com/p/gcdnet/}}
+Yang, Y. and Zou, H. (2012) 
+\emph{An Efficient Algorithm for Computing The HHSVM and Its Generalizations.}\cr
+\url{http://code.google.com/p/gcdnet/}\cr}
 
 
 \seealso{\code{plot.gcdnet}}

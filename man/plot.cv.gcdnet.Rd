@@ -3,7 +3,7 @@
 \title{plot the cross-validation curve produced by cv.gcdnet}
 \description{
 Plots the cross-validation curve, and upper and lower standard deviation
-curves, as a function of the \code{lambda} values used.}
+curves, as a function of the \code{lambda} values used. This function is modified based on the \code{plot.cv} function from the \code{glmnet} package.}
 \usage{
 \method{plot}{cv.gcdnet}(x, sign.lambda, ...)
 }
@@ -13,15 +13,18 @@ curves, as a function of the \code{lambda} values used.}
 	its negative if \code{sign.lambda=-1}.}
 	\item{\dots}{other graphical parameters to plot}
 }
-\details{
-A plot is produced.}
+\details{A plot is produced.}
 
 \author{Yi Yang and Hui Zou\cr
 Maintainer: Yi Yang  <yi@stat.umn.edu>}
 \references{
- Yi Yang and Hui Zou. \dQuote{An Efficient Algorithm for Computing HHSVM and Its Generalization}.   School of Statistics, University of Minnesota.
+Yang, Y. and Zou, H. (2012) 
+\emph{An Efficient Algorithm for Computing The HHSVM and Its Generalizations.}\cr
+\url{http://code.google.com/p/gcdnet/}\cr
 
-\url{http://code.google.com/p/gcdnet/}}
+Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized
+linear models via coordinate descent," \emph{Journal of Statistical Software, 33, 1.}\cr
+\url{http://www.jstatsoft.org/v33/i01/}}
 
 \seealso{\code{\link{cv.gcdnet}}.}
 \examples{

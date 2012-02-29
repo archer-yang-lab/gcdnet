@@ -9,14 +9,19 @@ The \code{FHT} data set has n = 50 observations and p = 100 predictors. The cova
 \format{
   This data frame contains the following columns:
   \describe{
-    \item{x1}{a matrix with 100 rows and 5000 columns}
-    \item{y1}{class labels}
+    \item{x}{a matrix with 100 rows and 5000 columns}
+    \item{y}{class labels}
   }
 }
 \references{
+Yang, Y. and Zou, H. (2012) 
+\emph{An Efficient Algorithm for Computing The HHSVM and Its Generalizations.}\cr
+\url{http://code.google.com/p/gcdnet/}\cr
+
 Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized
-linear models via coordinate descent," \emph{Journal of Statistical Software, 33, 1.}
-}
+linear models via coordinate descent," \emph{Journal of Statistical Software, 33, 1.}\cr
+\url{http://www.jstatsoft.org/v33/i01/}}
+
 \examples{
 data(FHT)
 }

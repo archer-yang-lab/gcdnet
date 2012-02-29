@@ -1,16 +1,15 @@
 ! --------------------------------------------------------------------------
-! hsvmlassoNET.f90: the GCD algorithm for HHSVM.
+! loglassoNET.f90: the GCD algorithm for logistic regression.
 ! --------------------------------------------------------------------------
 ! 
 ! USAGE:
 ! 
-! call hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, dfmax, &
+! call loglassoNET (lam2, nobs, nvars, x, y, jd, pf, dfmax, &
 ! & pmax, nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, &
 ! & nbeta, alam, npass, jerr)
 ! 
 ! INPUT ARGUMENTS:
 ! 
-!    delta = the parameter in HHSVM model.
 !    lam2 = regularization parameter for the quadratic penalty of the coefficients
 !    nobs = number of observations
 !    nvars = number of predictor variables
@@ -73,13 +72,14 @@
 !    School of Statistics, University of Minnesota.
 ! 
 ! REFERENCES:
-!    Yang, Y. and Zou, H. (2012). An Efficient Algorithm for Computing The HHSVM and Its Generalizations.
-!    Journal of Computational and Graphical Statistics. To be accepted after minor revision. 
+!    Yang, Y. and Zou, H (2012). An Efficient Algorithm for Computing The HHSVM and Its Generalizations.
+!    Journal of Computational and Graphical Statistics. To be accepted after minor revision.
 
 
-SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, dfmax, &
-& pmax, nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, &
-& nbeta, alam, npass, jerr)
+! --------------------------------------------------
+SUBROUTINE loglassoNET (lam2, nobs, nvars, x, y, jd, pf, dfmax, pmax, &
+& nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, nbeta, &
+& alam, npass, jerr)
 ! --------------------------------------------------
       IMPLICIT NONE
     ! - - - arg types - - -
@@ -99,7 +99,6 @@ SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, dfmax, &
       DOUBLE PRECISION :: lam2
       DOUBLE PRECISION :: flmin
       DOUBLE PRECISION :: eps
-      DOUBLE PRECISION :: delta
       DOUBLE PRECISION :: x (nobs, nvars)
       DOUBLE PRECISION :: y (nobs)
       DOUBLE PRECISION :: pf (nvars)
@@ -140,8 +139,8 @@ SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, dfmax, &
       pf = Max (0.0D0, pf)
       pf = pf * nvars / sum (pf)
       CALL standard (nobs, nvars, x, ju, isd, xmean, xnorm, maj)
-      CALL hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
-     & pf, dfmax, pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, &
+      CALL loglassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, &
+     & dfmax, pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, &
      & ibeta, nbeta, alam, npass, jerr)
       IF (jerr > 0) RETURN! check error after calling function
 ! - - - organize beta afterward - - -
@@ -157,10 +156,10 @@ SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, dfmax, &
       END DO
       DEALLOCATE (ju, xmean, xnorm, maj)
       RETURN
-END SUBROUTINE hsvmlassoNET
+END SUBROUTINE loglassoNET
 ! --------------------------------------------------
-SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
-& pf, dfmax, pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, m, &
+SUBROUTINE loglassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, &
+& dfmax, pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, m, &
 & nbeta, alam, npass, jerr)
 ! --------------------------------------------------
       IMPLICIT NONE
@@ -183,7 +182,6 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
       INTEGER :: nbeta (nlam)
       DOUBLE PRECISION :: lam2
       DOUBLE PRECISION :: eps
-      DOUBLE PRECISION :: delta
       DOUBLE PRECISION :: x (nobs, nvars)
       DOUBLE PRECISION :: y (nobs)
       DOUBLE PRECISION :: pf (nvars)
@@ -201,11 +199,9 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
       DOUBLE PRECISION :: al
       DOUBLE PRECISION :: alf
       DOUBLE PRECISION :: flmin
-      DOUBLE PRECISION :: dl (nobs)
       DOUBLE PRECISION, DIMENSION (:), ALLOCATABLE :: b
       DOUBLE PRECISION, DIMENSION (:), ALLOCATABLE :: oldbeta
       DOUBLE PRECISION, DIMENSION (:), ALLOCATABLE :: r
-      INTEGER :: i
       INTEGER :: k
       INTEGER :: j
       INTEGER :: l
@@ -234,13 +230,14 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
       npass = 0
       ni = npass
       mnl = Min (mnlam, nlam)
-      FORALL (j=1:nvars) maj (j) = maj (j)
+      FORALL (j=1:nvars) maj (j) = 0.25D0 * maj (j)
       IF (flmin < 1.0D0) THEN
          flmin = Max (mfl, flmin)
          alf = flmin ** (1.0D0/(nlam-1.0D0))
       END IF
 ! --------- lambda loop ----------------------------
       DO l = 1, nlam
+! --------- computing lambda ----------------------------
          IF (flmin >= 1.0D0) THEN
             al = ulam (l)
          ELSE
@@ -250,20 +247,11 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
                al = big
             ELSE IF (l == 2) THEN
                al = 0.0D0
-               DO i = 1, nobs
-                  IF (r(i) > 1.0D0) THEN
-                     dl (i) = 0.0D0
-                  ELSE IF (r(i) <= (1-delta)) THEN
-                     dl (i) = - 1.0D0
-                  ELSE
-                     dl (i) = (r(i)-1.0D0) / delta
-                  END IF
-               END DO
                DO j = 1, nvars
                   IF (ju(j) /= 0) THEN
                      IF (pf(j) > 0.0D0) THEN
-                        u = dot_product (dl*y, x(:, j))
-                        al = Max (al, Abs(u)/pf(j))
+                        al = Max (al, Abs(dot_product(y/(1.0D0+Exp(r)), &
+                       & x(:, j)))/pf(j))
                      END IF
                   END IF
                END DO
@@ -282,28 +270,18 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
                DO k = 1, nvars
                   IF (ju(k) /= 0) THEN
                      oldb = b (k)
-                     u = 0.0D0
-                     DO i = 1, nobs
-                  IF (r(i) > 1.0D0) THEN
-                     dl (i) = 0.0D0
-                  ELSE IF (r(i) <= (1-delta)) THEN
-                     dl (i) = - 1.0D0
-                  ELSE
-                     dl (i) = (r(i)-1.0D0) / delta
-                  END IF
-                        u = u + dl (i) * y (i) * x (i, k)
-                     END DO
-                     u = 2.0D0 * maj (k) * b (k) / delta - u / nobs
+                     u = dot_product (y/(1.0D0+Exp(r)), x(:, k))
+                     u = maj (k) * b (k) + u / nobs
                      v = al * pf (k)
                      v = Abs (u) - v
                      IF (v > 0.0D0) THEN
-                     	b (k) = sign (v, u) / (2.0D0 * maj(k) / delta + lam2)
+                        b (k) = sign (v, u) / (maj(k)+lam2)
                      ELSE
                         b (k) = 0.0D0
                      END IF
                      d = b (k) - oldb
                      IF (Abs(d) > 0.0D0) THEN
-                        dif = Max (dif, 2.0*d**2/delta)
+                        dif = Max (dif, d**2)
                         r = r + y * x (:, k) * d
                         IF (mm(k) == 0) THEN
                            ni = ni + 1
@@ -315,22 +293,12 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
                   END IF
                END DO
                IF (ni > pmax) EXIT
-               d = 0.0D0
-               DO i = 1, nobs
-               IF (r(i) > 1.0D0) THEN
-                  dl (i) = 0.0D0
-               ELSE IF (r(i) <= (1-delta)) THEN
-                  dl (i) = - 1.0D0
-               ELSE
-                  dl (i) = (r(i)-1.0D0) / delta
-               END IF
-                  d = d + dl (i) * y (i)
-               END DO
-               d = - 0.5D0 * delta * d / nobs
+               d = sum (y/(1.0D0+Exp(r)))
+               d = 4.0D0 * d / nobs
                IF (d /= 0.0D0) THEN
-                  b (0) = b (0) +  d
+                  b (0) = b (0) + d
                   r = r + y * d
-                  dif = Max (dif, 2.0*d**2/delta)
+                  dif = Max (dif, d**2)
                END IF
                IF (dif < eps) EXIT
         ! --inner loop----------------------
@@ -340,47 +308,27 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
                   DO j = 1, ni
                      k = m (j)
                      oldb = b (k)
-                     u = 0.0D0
-                     DO i = 1, nobs
-                  IF (r(i) > 1.0D0) THEN
-                     dl (i) = 0.0D0
-                  ELSE IF (r(i) <= (1-delta)) THEN
-                     dl (i) = - 1.0D0
-                  ELSE
-                     dl (i) = (r(i)-1.0D0) / delta
-                  END IF
-                        u = u + dl (i) * y (i) * x (i, k)
-                     END DO
-                     u = 2.0D0 * maj (k) * b (k) / delta - u / nobs
+                     u = dot_product (y/(1.0D0+Exp(r)), x(:, k))
+                     u = maj (k) * b (k) + u / nobs
                      v = al * pf (k)
                      v = Abs (u) - v
                      IF (v > 0.0D0) THEN
-                        b (k) = sign (v, u) / (2.0D0 * maj(k) / delta + lam2)
+                        b (k) = sign (v, u) / (maj(k)+lam2)
                      ELSE
                         b (k) = 0.0D0
                      END IF
                      d = b (k) - oldb
                      IF (Abs(d) > 0.0D0) THEN
-                        dif = Max (dif, 2.0*d**2/delta)
+                        dif = Max (dif, d**2)
                         r = r + y * x (:, k) * d
                      END IF
                   END DO
-                  d = 0.0D0
-                  DO i = 1, nobs
-                  IF (r(i) > 1.0D0) THEN
-                     dl (i) = 0.0D0
-                  ELSE IF (r(i) <= (1-delta)) THEN
-                     dl (i) = - 1.0D0
-                  ELSE
-                     dl (i) = (r(i)-1.0D0) / delta
-                  END IF
-                     d = d + dl (i) * y (i)
-                  END DO
-                  d = - 0.5D0 * delta * d / nobs
+                  d = sum (y/(1.0D0+Exp(r)))
+                  d = 4.0D0 * d / nobs
                   IF (d /= 0.0D0) THEN
                      b (0) = b (0) + d
                      r = r + y * d
-                     dif = Max (dif, 2.0*d**2/delta)
+                     dif = Max (dif, d**2)
                   END IF
                   IF (dif < eps) EXIT
                END DO
@@ -419,4 +367,4 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
       END DO
       DEALLOCATE (b, oldbeta, r, mm)
       RETURN
-END SUBROUTINE hsvmlassoNETpath
+END SUBROUTINE loglassoNETpath

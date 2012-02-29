@@ -20,6 +20,14 @@ a two-column matrix, the first columns is the number of nonzero coefficients and
 
 \author{Yi Yang and Hui Zou\cr
 Maintainer: Yi Yang  <yi@stat.umn.edu>}
+\references{
+Yang, Y. and Zou, H. (2012) 
+\emph{An Efficient Algorithm for Computing The HHSVM and Its Generalizations.}\cr
+\url{http://code.google.com/p/gcdnet/}\cr
+
+Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized
+linear models via coordinate descent," \emph{Journal of Statistical Software, 33, 1.}\cr
+\url{http://www.jstatsoft.org/v33/i01/}}
 
 \examples{
 data(FHT)

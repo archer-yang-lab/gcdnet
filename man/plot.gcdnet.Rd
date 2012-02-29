@@ -3,7 +3,7 @@
 \title{Plot coefficients from a "gcdnet" object}
 \description{
 Produces a coefficient profile plot of the coefficient paths for a
-fitted \code{\link{gcdnet}} object.
+fitted \code{\link{gcdnet}} object. This function is modified based on the \code{plot} function from the \code{glmnet} package.
 }
 \usage{
 \method{plot}{gcdnet}(x, xvar = c("norm", "lambda"), color = FALSE, label = FALSE, ...)
@@ -23,9 +23,13 @@ A coefficient profile plot is produced.
 \author{Yi Yang and Hui Zou\cr
 Maintainer: Yi Yang  <yi@stat.umn.edu>}
 \references{
- Yi Yang and Hui Zou. \dQuote{An Efficient Algorithm for Computing HHSVM and Its Generalization}.   School of Statistics, University of Minnesota.
+Yang, Y. and Zou, H. (2012) 
+\emph{An Efficient Algorithm for Computing The HHSVM and Its Generalizations.}\cr
+\url{http://code.google.com/p/gcdnet/}\cr
 
-\url{http://code.google.com/p/gcdnet/}}
+Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized
+linear models via coordinate descent," \emph{Journal of Statistical Software, 33, 1.}\cr
+\url{http://www.jstatsoft.org/v33/i01/}}
 
 \examples{
 data(FHT)

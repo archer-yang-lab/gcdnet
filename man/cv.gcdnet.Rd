@@ -5,7 +5,7 @@
 \alias{cv.logitpath}
 \title{Cross-validation for gcdnet}
 \description{Does k-fold cross-validation for gcdnet, produces a plot,
-and returns a value for \code{lambda}}
+and returns a value for \code{lambda}. This function is modified based on the \code{cv} function from the \code{glmnet} package.}
 \usage{
 cv.gcdnet(x, y, lambda, pred.loss, nfolds, foldid, delta,...)
 }
@@ -55,9 +55,13 @@ list with the ingredients of the cross-validation fit.
 \author{Yi Yang and Hui Zou\cr
 Maintainer: Yi Yang  <yi@stat.umn.edu>}
 \references{
- Yi Yang and Hui Zou. \dQuote{An Efficient Algorithm for Computing HHSVM and Its Generalization}.   School of Statistics, University of Minnesota.
+Yang, Y. and Zou, H. (2012) 
+\emph{An Efficient Algorithm for Computing The HHSVM and Its Generalizations.}\cr
+\url{http://code.google.com/p/gcdnet/}\cr
 
-\url{http://code.google.com/p/gcdnet/}}
+Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized
+linear models via coordinate descent," \emph{Journal of Statistical Software, 33, 1.}\cr
+\url{http://www.jstatsoft.org/v33/i01/}}
 
 
 \seealso{\code{\link{gcdnet}}, \code{\link{plot.cv.gcdnet}}, \code{\link{predict.cv.gcdnet}}, and \code{\link{coef.cv.gcdnet}} methods.}
