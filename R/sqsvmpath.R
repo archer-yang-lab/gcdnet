@@ -9,7 +9,7 @@ sqsvmpath = function(x, y, nlam, flmin, ulam, isd, eps,
         stop("y should be a factor with two levels")
     #################################################################################
     # call Fortran core
-    fit = .Fortran("svmlassoNET", lam2, nobs, nvars, as.double(x), 
+    fit = .Fortran("sqsvmlassoNET", lam2, nobs, nvars, as.double(x), 
         as.double(y), jd, pf, dfmax, pmax, nlam, flmin, 
         ulam, eps, isd, maxit, nalam = integer(1), b0 = double(nlam), 
         beta = double(pmax * nlam), ibeta = integer(pmax), 

@@ -1,10 +1,10 @@
 ! --------------------------------------------------------------------------
-! svmlassoNET.f90: the GCD algorithm for squared SVM with sqaured hinge loss.
+! sqsvmlassoNET.f90: the GCD algorithm for squared SVM with sqaured hinge loss.
 ! --------------------------------------------------------------------------
 ! 
 ! USAGE:
 ! 
-! call svmlassoNET (lam2, nobs, nvars, x, y, jd, pf, dfmax, &
+! call sqsvmlassoNET (lam2, nobs, nvars, x, y, jd, pf, dfmax, &
 ! & pmax, nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, &
 ! & nbeta, alam, npass, jerr)
 ! 
@@ -77,7 +77,7 @@
 
 
 ! --------------------------------------------------
-SUBROUTINE svmlassoNET (lam2, nobs, nvars, x, y, jd, pf, dfmax, pmax, &
+SUBROUTINE sqsvmlassoNET (lam2, nobs, nvars, x, y, jd, pf, dfmax, pmax, &
 & nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, nbeta, &
 & alam, npass, jerr)
 ! --------------------------------------------------
@@ -139,7 +139,7 @@ SUBROUTINE svmlassoNET (lam2, nobs, nvars, x, y, jd, pf, dfmax, pmax, &
       pf = Max (0.0D0, pf)
       pf = pf * nvars / sum (pf)
       CALL standard (nobs, nvars, x, ju, isd, xmean, xnorm, maj)
-      CALL svmlassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, &
+      CALL sqsvmlassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, &
      & dfmax, pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, &
      & ibeta, nbeta, alam, npass, jerr)
       IF (jerr > 0) RETURN! check error after calling function
@@ -156,9 +156,9 @@ SUBROUTINE svmlassoNET (lam2, nobs, nvars, x, y, jd, pf, dfmax, pmax, &
       END DO
       DEALLOCATE (ju, xmean, xnorm, maj)
       RETURN
-END SUBROUTINE svmlassoNET
+END SUBROUTINE sqsvmlassoNET
 ! --------------------------------------------------
-SUBROUTINE svmlassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, &
+SUBROUTINE sqsvmlassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, &
 & dfmax, pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, m, &
 & nbeta, alam, npass, jerr)
 ! --------------------------------------------------
@@ -388,4 +388,4 @@ SUBROUTINE svmlassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, &
       END DO
       DEALLOCATE (b, oldbeta, r, mm)
       RETURN
-END SUBROUTINE svmlassoNETpath
+END SUBROUTINE sqsvmlassoNETpath
