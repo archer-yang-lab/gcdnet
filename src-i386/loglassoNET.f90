@@ -230,7 +230,7 @@ SUBROUTINE loglassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, &
       npass = 0
       ni = npass
       mnl = Min (mnlam, nlam)
-      FORALL (j=1:nvars) maj (j) = 0.25D0 * maj (j)
+      maj = 0.25 * maj
       IF (flmin < 1.0D0) THEN
          flmin = Max (mfl, flmin)
          alf = flmin ** (1.0D0/(nlam-1.0D0))

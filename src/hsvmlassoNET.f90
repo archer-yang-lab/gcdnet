@@ -234,7 +234,7 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
       npass = 0
       ni = npass
       mnl = Min (mnlam, nlam)
-      FORALL (j=1:nvars) maj (j) = maj (j)
+      maj = 2.0 * maj / delta
       IF (flmin < 1.0D0) THEN
          flmin = Max (mfl, flmin)
          alf = flmin ** (1.0D0/(nlam-1.0D0))
@@ -293,11 +293,11 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
                   END IF
                         u = u + dl (i) * y (i) * x (i, k)
                      END DO
-                     u = 2.0D0 * maj (k) * b (k) / delta - u / nobs
+                     u = maj (k) * b (k) - u / nobs
                      v = al * pf (k)
                      v = Abs (u) - v
                      IF (v > 0.0D0) THEN
-                     	b (k) = sign (v, u) / (2.0D0 * maj(k) / delta + lam2)
+                     	b (k) = sign (v, u) / (maj(k) + lam2)
                      ELSE
                         b (k) = 0.0D0
                      END IF
@@ -351,11 +351,11 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
                   END IF
                         u = u + dl (i) * y (i) * x (i, k)
                      END DO
-                     u = 2.0D0 * maj (k) * b (k) / delta - u / nobs
+                     u = maj (k) * b (k) - u / nobs
                      v = al * pf (k)
                      v = Abs (u) - v
                      IF (v > 0.0D0) THEN
-                        b (k) = sign (v, u) / (2.0D0 * maj(k) / delta + lam2)
+                        b (k) = sign (v, u) / (maj(k) + lam2)
                      ELSE
                         b (k) = 0.0D0
                      END IF

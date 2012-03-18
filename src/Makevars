@@ -1,0 +1,1 @@
+PKG_FCFLAGS=-O3 -funroll-loops -ffast-math -momit-leaf-frame-pointer -fomit-frame-pointer
