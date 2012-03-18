@@ -2,7 +2,7 @@ CHANGELOG - Record of Changes for gcdnet
 Please find below the list of the various changes and improvements that were part of each successive update.
 
 1.0.1:
-* [fixed] Intercept update in Fortran implementation for "sqsvm"
+* [fixed] Intercept update formula in the Fortran implementation for "sqsvm"
 * [improved] The computation of L' (the first derivative of L)
 * [improved] The computation of upper bound M for majorization
 
