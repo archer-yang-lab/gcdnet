@@ -14,9 +14,9 @@ The \code{FHT} data set has n = 50 observations and p = 100 predictors. The cova
   }
 }
 \references{
-Yang, Y. and Zou, H. (2012) 
-\emph{An Efficient Algorithm for Computing The HHSVM and Its Generalizations.}\cr
-\url{http://code.google.com/p/gcdnet/}\cr
+Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for Computing The HHSVM and Its Generalizations," \emph{Journal of Computational and Graphical Statistics}. Accepted\cr
+BugReport: \url{http://code.google.com/p/gcdnet/}\cr
+
 
 Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized
 linear models via coordinate descent," \emph{Journal of Statistical Software, 33, 1.}\cr

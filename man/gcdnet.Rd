@@ -86,9 +86,9 @@ An object with S3 class \code{\link{gcdnet}}.
 \author{Yi Yang and Hui Zou\cr
 Maintainer: Yi Yang  <yiyang@umn.edu>}
 \references{
-Yang, Y. and Zou, H. (2012) 
-\emph{An Efficient Algorithm for Computing The HHSVM and Its Generalizations.}\cr
-\url{http://code.google.com/p/gcdnet/}\cr}
+Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for Computing The HHSVM and Its Generalizations," \emph{Journal of Computational and Graphical Statistics}. Accepted\cr
+BugReport: \url{http://code.google.com/p/gcdnet/}\cr
+}
 
 
 \seealso{\code{plot.gcdnet}}

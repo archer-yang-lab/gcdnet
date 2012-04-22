@@ -73,7 +73,7 @@
 ! 
 ! REFERENCES:
 !    Yang, Y. and Zou, H. (2012). An Efficient Algorithm for Computing The HHSVM and Its Generalizations.
-!    Journal of Computational and Graphical Statistics. To be accepted after minor revision.
+!    Journal of Computational and Graphical Statistics. Accepted.
 
 
 ! --------------------------------------------------
