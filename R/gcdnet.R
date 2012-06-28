@@ -1,6 +1,6 @@
 gcdnet <- function(x, y, nlambda = 100, method = c("hhsvm", 
     "logit", "sqsvm"), lambda.factor = ifelse(nobs < nvars, 0.01, 
-    1e-04), lambda = NULL, lambda2 = 0, pf = rep(1, nvars), exclude, 
+    1e-04), lambda = NULL, lambda2 = 0, pf = rep(1, nvars), pf2 = rep(1, nvars), exclude, 
     dfmax = nvars + 1, pmax = min(dfmax * 1.2, nvars), standardize = TRUE, 
     eps = 1e-08, maxit = 1e+06, delta = 2) {
     #################################################################################
@@ -20,12 +20,15 @@ gcdnet <- function(x, y, nlambda = 100, method = c("hhsvm",
     #################################################################################
     #parameter setup
     if (length(pf) != nvars) 
-        stop("The size of penalty factor must be same as the number of input variables")
+        stop("The size of L1 penalty factor must be same as the number of input variables")
+	if (length(pf2) != nvars) 
+	    stop("The size of L2 penalty factor must be same as the number of input variables")
     if (lambda2 < 0) 
         stop("lambda2 must be non-negative")
     maxit <- as.integer(maxit)
     lam2 <- as.double(lambda2)
     pf <- as.double(pf)
+    pf2 <- as.double(pf2)
     isd <- as.integer(standardize)
     eps <- as.double(eps)
     dfmax <- as.integer(dfmax)
@@ -54,11 +57,11 @@ gcdnet <- function(x, y, nlambda = 100, method = c("hhsvm",
     }
     #################################################################################
     fit <- switch(method, hhsvm = hsvmpath(x, y, nlam, flmin, 
-        ulam, isd, eps, dfmax, pmax, jd, pf, maxit, lam2, delta, 
+        ulam, isd, eps, dfmax, pmax, jd, pf, pf2, maxit, lam2, delta, 
         nobs, nvars, vnames), logit = logitpath(x, y, nlam, flmin, 
-        ulam, isd, eps, dfmax, pmax, jd, pf, maxit, lam2, nobs, 
+        ulam, isd, eps, dfmax, pmax, jd, pf, pf2, maxit, lam2, nobs, 
         nvars, vnames), sqsvm = sqsvmpath(x, y, nlam, flmin, 
-        ulam, isd, eps, dfmax, pmax, jd, pf, maxit, lam2, nobs, 
+        ulam, isd, eps, dfmax, pmax, jd, pf, pf2, maxit, lam2, nobs, 
         nvars, vnames))
     if (is.null(lambda)) 
         fit$lambda <- lamfix(fit$lambda)

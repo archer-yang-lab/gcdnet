@@ -4,7 +4,7 @@
 ! 
 ! USAGE:
 ! 
-! call hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, dfmax, &
+! call hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, &
 ! & pmax, nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, &
 ! & nbeta, alam, npass, jerr)
 ! 
@@ -20,8 +20,10 @@
 !    jd(jd(1)+1) = predictor variable deletion flag
 !                  jd(1) = 0  => use all variables
 !                  jd(1) != 0 => do not use variables jd(2)...jd(jd(1)+1)
-!    pf(nvars) = relative penalties for each predictor variable
+!    pf(nvars) = relative L1 penalties for each predictor variable
 !                pf(j) = 0 => jth variable unpenalized
+!    pf2(nvars) = relative L2 penalties for each predictor variable
+!                pf2(j) = 0 => jth variable unpenalized
 !    dfmax = limit the maximum number of variables in the model.
 !            (one of the stopping criterion)
 !    pmax = limit the maximum number of variables ever to be nonzero. 
@@ -77,7 +79,7 @@
 !    Journal of Computational and Graphical Statistics. Accepted. 
 
 
-SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, dfmax, &
+SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, &
 & pmax, nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, &
 & nbeta, alam, npass, jerr)
 ! --------------------------------------------------
@@ -103,6 +105,7 @@ SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, dfmax, &
       DOUBLE PRECISION :: x (nobs, nvars)
       DOUBLE PRECISION :: y (nobs)
       DOUBLE PRECISION :: pf (nvars)
+      DOUBLE PRECISION :: pf2 (nvars)
       DOUBLE PRECISION :: ulam (nlam)
       DOUBLE PRECISION :: beta (pmax, nlam)
       DOUBLE PRECISION :: b0 (nlam)
@@ -137,11 +140,15 @@ SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, dfmax, &
          jerr = 10000
          RETURN
       END IF
+      IF (maxval(pf2) <= 0.0D0) THEN
+         jerr = 10000
+         RETURN
+      END IF
       pf = Max (0.0D0, pf)
-      pf = pf * nvars / sum (pf)
+      pf2 = Max (0.0D0, pf2)
       CALL standard (nobs, nvars, x, ju, isd, xmean, xnorm, maj)
       CALL hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
-     & pf, dfmax, pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, &
+     & pf, pf2, dfmax, pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, &
      & ibeta, nbeta, alam, npass, jerr)
       IF (jerr > 0) RETURN! check error after calling function
 ! - - - organize beta afterward - - -
@@ -160,7 +167,7 @@ SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, dfmax, &
 END SUBROUTINE hsvmlassoNET
 ! --------------------------------------------------
 SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
-& pf, dfmax, pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, m, &
+& pf, pf2, dfmax, pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, m, &
 & nbeta, alam, npass, jerr)
 ! --------------------------------------------------
       IMPLICIT NONE
@@ -187,6 +194,7 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
       DOUBLE PRECISION :: x (nobs, nvars)
       DOUBLE PRECISION :: y (nobs)
       DOUBLE PRECISION :: pf (nvars)
+      DOUBLE PRECISION :: pf2 (nvars)
       DOUBLE PRECISION :: beta (pmax, nlam)
       DOUBLE PRECISION :: ulam (nlam)
       DOUBLE PRECISION :: b0 (nlam)
@@ -297,7 +305,7 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
                      v = al * pf (k)
                      v = Abs (u) - v
                      IF (v > 0.0D0) THEN
-                     	b (k) = sign (v, u) / (maj(k) + lam2)
+                     	b (k) = sign (v, u) / (maj(k) + pf2(k) * lam2)
                      ELSE
                         b (k) = 0.0D0
                      END IF
@@ -355,7 +363,7 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
                      v = al * pf (k)
                      v = Abs (u) - v
                      IF (v > 0.0D0) THEN
-                        b (k) = sign (v, u) / (maj(k) + lam2)
+                        b (k) = sign (v, u) / (maj(k) + pf2(k) * lam2)
                      ELSE
                         b (k) = 0.0D0
                      END IF

@@ -1,5 +1,5 @@
 sqsvmpath <- function(x, y, nlam, flmin, ulam, isd, 
-    eps, dfmax, pmax, jd, pf, maxit, lam2, nobs, nvars, vnames) {
+    eps, dfmax, pmax, jd, pf, pf2, maxit, lam2, nobs, nvars, vnames) {
     #################################################################################
     #data setup
     y <- as.factor(y)
@@ -9,7 +9,7 @@ sqsvmpath <- function(x, y, nlam, flmin, ulam, isd,
     #################################################################################
     # call Fortran core
     fit <- .Fortran("sqsvmlassoNET", lam2, nobs, nvars, as.double(x), 
-        as.double(y), jd, pf, dfmax, pmax, nlam, flmin, ulam, 
+        as.double(y), jd, pf, pf2, dfmax, pmax, nlam, flmin, ulam, 
         eps, isd, maxit, nalam = integer(1), b0 = double(nlam), 
         beta = double(pmax * nlam), ibeta = integer(pmax), nbeta = integer(nlam), 
         alam = double(nlam), npass = integer(1), jerr = integer(1), 
