@@ -1,14 +1,19 @@
 CHANGELOG - Record of Changes for gcdnet
 Please find below the list of the various changes and improvements that were part of each successive update.
 
+1.0.3:
+* [added] Least squares loss is added.
+* [added] Huber regression loss is added.
+* [added] FAQ section for the main function "gcdnet" in the package documentation.
+
 1.0.2:
 * [added] Now separate L2 penalty weights can be applied to each coefficient to allow
 differential L2 shrinkage.
 
 1.0.1:
-* [fixed] Intercept update formula in the Fortran implementation for "sqsvm"
-* [improved] The computation of L' (the first derivative of L)
-* [improved] The computation of upper bound M for majorization
+* [fixed] Intercept update formula in the Fortran implementation for "sqsvm".
+* [improved] The computation of L' (the first derivative of L).
+* [improved] The computation of upper bound M for majorization.
 
 1.0.0:
 * Initial release.
