@@ -2,8 +2,6 @@ CHANGELOG - Record of Changes for gcdnet
 Please find below the list of the various changes and improvements that were part of each successive update.
 
 1.0.3:
-* [added] Least squares loss is added.
-* [added] Huber regression loss is added.
 * [added] FAQ section for the main function "gcdnet" in the package documentation.
 
 1.0.2:
