@@ -76,7 +76,7 @@
 ! 
 ! REFERENCES:
 !    Yang, Y. and Zou, H. (2012). An Efficient Algorithm for Computing The HHSVM and Its Generalizations.
-!    Journal of Computational and Graphical Statistics. Accepted. 
+!    Journal of Computational and Graphical Statistics, 22, 396-415. 
 
 
 SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, &
