@@ -2,10 +2,10 @@ cv.sqsvmpath <- function(outlist, lambda, x, y, foldid,
     pred.loss, delta) {
     typenames <- c(misclass = "Misclassification Error", loss = "Margin Based Loss")
     if (pred.loss == "default") 
-        pred.loss <- "misclass"
+        pred.loss <- "loss"
     if (!match(pred.loss, c("misclass", "loss"), FALSE)) {
-        warning("Only 'misclass' and 'loss' available for Squared SVM classification; 'misclass' used")
-        pred.loss <- "misclass"
+        warning("Only 'misclass' and 'loss' available for Squared SVM classification; 'loss' used")
+        pred.loss <- "loss"
     }
     ###Turn y into c(0,1)
     y <- as.factor(y)

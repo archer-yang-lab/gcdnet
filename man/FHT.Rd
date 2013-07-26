@@ -11,6 +11,8 @@ The \code{FHT} data set has n = 50 observations and p = 100 predictors. The cova
   \describe{
     \item{x}{a matrix with 100 rows and 5000 columns}
     \item{y}{class labels}
+    \item{y_reg}{response variable for regression}
+
   }
 }
 \references{

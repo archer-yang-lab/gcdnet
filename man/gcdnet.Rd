@@ -4,7 +4,7 @@
 \description{Fits a regularization path for large margin classifiers at a sequence of regularization parameters lambda.}
 \usage{
 gcdnet(x, y, nlambda = 100, 
-		method = c("hhsvm", "logit", "sqsvm"),
+		method = c("hhsvm", "logit", "sqsvm", "ls"),
 		lambda.factor = ifelse(nobs < nvars, 0.01, 1e-04), lambda = NULL, lambda2 = 0, 
 		pf = rep(1, nvars), pf2 = rep(1, nvars), exclude, 
 		dfmax = nvars + 1, pmax = min(dfmax * 1.2, 
@@ -19,8 +19,9 @@ gcdnet(x, y, nlambda = 100,
 		\itemize{
 		\item \code{"hhsvm"} Huberized squared hinge loss,
 		\item \code{"sqsvm"} Squared hinge loss,
-		\item \code{"logit"} logistic loss.
-		}Default is \code{"loss"}.}
+		\item \code{"logit"} logistic loss,
+		\item \code{"ls"} least square loss.
+		} Default is \code{"hhsvm"}.}
 		\item{lambda.factor}{The factor for getting the minimal lambda in \code{lambda} sequence, where \code{min(lambda)} = \code{lambda.factor} * \code{max(lambda)}.  \code{max(lambda)} is the smallest value of \code{lambda} for which all coefficients are zero. The default depends on the relationship between \eqn{N} (the number of rows in the matrix of predictors) and \eqn{p}{p} (the number of predictors). If \eqn{N > p}, the default is \code{0.0001},
 		close to zero.  If \eqn{N<p}, the default is \code{0.01}.
 		A very small value of \code{lambda.factor} will lead to a saturated fit. It takes no effect if there is user-defined \code{lambda} sequence.} 
@@ -67,7 +68,7 @@ gcdnet(x, y, nlambda = 100,
 \details{
 Note that the objective function in \code{gcdnet} is
 \deqn{Loss(y, X, beta))/N + lambda1 * |beta| + 0.5 * lambda2 * beta^2}
-where the penalty is a combination of L1 and L2 term. Users can specify the loss function to use, options include Huberized squared hinge loss, Squared hinge loss and logistic regression. Users can also tweak the penalty by choosing different \eqn{lambda2} and penalty factor. 
+where the penalty is a combination of L1 and L2 term. Users can specify the loss function to use, options include Huberized squared hinge loss, Squared hinge loss, least square loss and logistic regression. Users can also tweak the penalty by choosing different \eqn{lambda2} and penalty factor. 
 
 For computing speed reason, if models are not converging or running slow, consider increasing \code{eps}, decreasing
 \code{nlambda}, or increasing \code{lambda.factor} before increasing
@@ -119,7 +120,32 @@ plot(m)
 
 \bold{Answer: } Yes, \code{pf} and \code{pf2} are L1 and L2 penalty factor of length \eqn{p}{p} used for adaptive LASSO or adaptive elastic net. 0 means that the feature (variable) is always excluded, 1 means that the feature (variable) is included with weight 1.
 
+\bold{Question: }\dQuote{\emph{Why does predict function not work? predict should return the predicted probability of the positive class. Instead I get:}}
+\preformatted{
+Error in as.matrix(as.matrix(cbind2(1, newx)) %*% nbeta) : 
+  error in evaluating the argument 'x' in selecting 
+a method for function 'as.matrix': Error in t(.Call(Csparse_dense_crossprod, y,
+ t(x))) : 
+  error in evaluating the argument 'x' in selecting 
+a method for function 't': Error: Cholmod error 'X and/or Y have wrong dimensions' 
+at file ../MatrixOps/cholmod_sdmult.c, line 90?
+}
 
+\dQuote{\emph{Using the Arcene dataset and executing the following code will give the above error:}}
+\preformatted{
+library(gcdnet)
+arc <- read.csv("arcene.csv", header=FALSE)
+fit <- gcdnet(arc[,-10001], arc[,10001], standardize=FALSE, method="logit")
+pred <- rnorm(10000)
+predict(fit, pred, type="link")
+}
+
+\bold{Answer: } It is actually NOT a bug of gcdnet. When make prediction using a new matrix x, each observation of x should be arranged as a row of a matrix. In your code, because "pred" is a vector, you need to convert "pred" into a matrix, try the following code:
+\preformatted{
+pred <- rnorm(10000)
+pred <- matrix(pred,1,10000)
+predict(fit, pred, type="link")
+}
 }
 
 
@@ -147,6 +173,9 @@ BugReport: \url{http://code.google.com/p/gcdnet/}\cr
 \seealso{\code{plot.gcdnet}}
 \examples{
 data(FHT)
+# solution paths for the least squares
+m0 <- gcdnet(x=FHT$x,y=FHT$y_reg,lambda2=1,method="ls")
+plot(m0)
 # solution paths for the HHSVM
 m1 <- gcdnet(x=FHT$x,y=FHT$y,delta=1,lambda2=1,method="hhsvm")
 plot(m1)

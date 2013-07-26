@@ -3,6 +3,7 @@
 \alias{cv.hsvmpath}
 \alias{cv.sqsvmpath}
 \alias{cv.logitpath}
+\alias{cv.lspath}
 \title{Cross-validation for gcdnet}
 \description{Does k-fold cross-validation for gcdnet, produces a plot,
 and returns a value for \code{lambda}. This function is modified based on the \code{cv} function from the \code{glmnet} package.}
@@ -11,7 +12,7 @@ cv.gcdnet(x, y, lambda, pred.loss, nfolds, foldid, delta,...)
 }
 \arguments{
 		\item{x}{\code{x} matrix as in \code{\link{gcdnet}}.}
-		\item{y}{class label \code{y} as in \code{\link{gcdnet}}.}
+		\item{y}{response variable or class label \code{y} as in \code{\link{gcdnet}}.}
 		\item{lambda}{optional user-supplied lambda sequence; default is
 		\code{NULL}, and \code{\link{gcdnet}} chooses its own sequence.}
 		\item{nfolds}{number of folds - default is 5. Although \code{nfolds}
@@ -20,12 +21,12 @@ cv.gcdnet(x, y, lambda, pred.loss, nfolds, foldid, delta,...)
 		\item{foldid}{an optional vector of values between 1 and \code{nfold}
 		identifying what fold each observation is in. If supplied,
 		\code{nfold} can be missing.}
-		\item{pred.loss}{loss to use for cross-validation error. Valid options are:
+		\item{pred.loss}{loss function to use for cross-validation error. Valid options are:
 		\itemize{
-		\item \code{"loss"} Margin based loss function. 
-		\item \code{"misclass"} gives misclassification error for classification.}
+		\item \code{"loss"} Margin based loss function. When use least square loss \code{"ls"}, it gives mean square error (MSE).
+		\item \code{"misclass"} only available for classification: it gives misclassification error. }
 		Default is \code{"loss"}.}
-		\item{delta}{parameter \eqn{\delta}{delta} only used in HHSVM for computing margin based loss function, only available with \code{pred.loss = "misclass"}.}
+		\item{delta}{parameter \eqn{\delta}{delta} only used in HHSVM for computing margin based loss function, only available with \code{pred.loss = "loss"}.}
 		\item{\dots}{other arguments that can be passed to gcdnet.}
 
 }

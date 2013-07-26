@@ -2,10 +2,10 @@ cv.logitpath <- function(outlist, lambda, x, y, foldid,
     pred.loss, delta) {
     typenames <- c(misclass = "Misclassification Error", loss = "Margin Based Loss")
     if (pred.loss == "default") 
-        pred.loss <- "misclass"
+        pred.loss <- "loss"
     if (!match(pred.loss, c("misclass", "loss"), FALSE)) {
-        warning("Only 'misclass' and 'loss' available for logistic regression; 'misclass' used")
-        pred.loss <- "misclass"
+        warning("Only 'misclass' and 'loss' available for logistic regression; 'loss' used")
+        pred.loss <- "loss"
     }
     prob_min <- 1e-05
     fmax <- log(1/prob_min - 1)
