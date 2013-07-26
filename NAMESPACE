@@ -11,10 +11,12 @@ predict.gcdnet,
 predict.hsvmpath,
 predict.logitpath,
 predict.sqsvmpath,
+predict.lspath,
 coef.gcdnet,
 coef.hsvmpath,
 coef.sqsvmpath,
-coef.logitpath)
+coef.logitpath,
+coef.lspath)
 
 S3method("print","gcdnet")
 S3method("coef","gcdnet")
