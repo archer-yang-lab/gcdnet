@@ -5,7 +5,8 @@
 \usage{
 gcdnet(x, y, nlambda = 100, 
 		method = c("hhsvm", "logit", "sqsvm", "ls"),
-		lambda.factor = ifelse(nobs < nvars, 0.01, 1e-04), lambda = NULL, lambda2 = 0, 
+		lambda.factor = ifelse(nobs < nvars, 0.01, 1e-04), 
+		lambda = NULL, lambda2 = 0, 
 		pf = rep(1, nvars), pf2 = rep(1, nvars), exclude, 
 		dfmax = nvars + 1, pmax = min(dfmax * 1.2, 
 	    nvars), standardize = TRUE, eps = 1e-8, maxit = 1e6, delta = 2)
