@@ -121,6 +121,10 @@ plot(m)
 
 \bold{Answer: } Yes, \code{pf} and \code{pf2} are L1 and L2 penalty factor of length \eqn{p}{p} used for adaptive LASSO or adaptive elastic net. 0 means that the feature (variable) is always excluded, 1 means that the feature (variable) is included with weight 1.
 
+\bold{Question: }\dQuote{\emph{Does gcdnet deal with both continuous and categorical response variables?}}
+
+\bold{Answer: } Yes, both are supported, you can use a continuous type response variable with the least squares regression loss, or a categorical type response with losses for classification problem.
+
 \bold{Question: }\dQuote{\emph{Why does predict function not work? predict should return the predicted probability of the positive class. Instead I get:}}
 \preformatted{
 Error in as.matrix(as.matrix(cbind2(1, newx)) %*% nbeta) : 

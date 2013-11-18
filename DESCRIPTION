@@ -1,8 +1,6 @@
 Package: gcdnet
-Title: A generalized coordinate descent (GCD) algorithm for computing
-        the solution path of the hybrid Huberized support vector
-        machine (HHSVM) and its generalization.
-Version: 1.0.3
+Title:  LASSO and (adaptive) Elastic-Net penalized least squares, logistic regression, HHSVM and squared hinge loss SVM using a fast GCD algorithm
+Version: 1.0.4
 Date: 2012-2-21
 Author: Yi Yang <yiyang@umn.edu>, Hui Zou <hzou@stat.umn.edu>
 Maintainer: Yi Yang <yiyang@umn.edu>

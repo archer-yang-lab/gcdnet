@@ -1,6 +1,10 @@
 CHANGELOG - Record of Changes for gcdnet
 Please find below the list of the various changes and improvements that were part of each successive update.
 
+1.0.4:
+* [changed] Changed the package title.
+* [updated] Updated the FAQ section.
+
 1.0.3:
 * [added] Now gcdnet supports the elastic net penalized least squares.
 * [added] FAQ section for the main function "gcdnet" in the package documentation.
