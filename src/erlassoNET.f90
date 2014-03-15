@@ -4,13 +4,13 @@
 ! 
 ! USAGE:
 ! 
-! call erlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, &
+! call erlassoNET (omega, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, &
 ! & pmax, nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, &
 ! & nbeta, alam, npass, jerr)
 ! 
 ! INPUT ARGUMENTS:
 !
-!    delta = the parameter in the expectile regression model.
+!    omega = the parameter in the expectile regression model.
 !    lam2 = regularization parameter for the quadratic penalty of the coefficients
 !    nobs = number of observations
 !    nvars = number of predictor variables
@@ -79,7 +79,7 @@
 
 
 ! --------------------------------------------------
-SUBROUTINE erlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, pmax, &
+SUBROUTINE erlassoNET (omega, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, pmax, &
 & nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, nbeta, &
 & alam, npass, jerr)
 ! --------------------------------------------------
@@ -101,7 +101,7 @@ SUBROUTINE erlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, pmax,
       DOUBLE PRECISION :: lam2
       DOUBLE PRECISION :: flmin
       DOUBLE PRECISION :: eps
-      DOUBLE PRECISION :: delta
+      DOUBLE PRECISION :: omega
       DOUBLE PRECISION :: x (nobs, nvars)
       DOUBLE PRECISION :: y (nobs)
       DOUBLE PRECISION :: pf (nvars)
@@ -147,7 +147,7 @@ SUBROUTINE erlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, pmax,
       pf = Max (0.0D0, pf)
       pf2 = Max (0.0D0, pf2)
       CALL standard (nobs, nvars, x, ju, isd, xmean, xnorm, maj)
-      CALL erlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
+      CALL erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
      & pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, ibeta, &
      & nbeta, alam, npass, jerr)
       IF (jerr > 0) RETURN! check error after calling function
@@ -166,7 +166,7 @@ SUBROUTINE erlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, pmax,
       RETURN
 END SUBROUTINE erlassoNET
 ! --------------------------------------------------
-SUBROUTINE erlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
+SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
 & pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, m, nbeta, alam, &
 & npass, jerr)
 ! --------------------------------------------------
@@ -190,7 +190,7 @@ SUBROUTINE erlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
       INTEGER :: nbeta (nlam)
       DOUBLE PRECISION :: lam2
       DOUBLE PRECISION :: eps
-      DOUBLE PRECISION :: delta
+      DOUBLE PRECISION :: omega
       DOUBLE PRECISION :: x (nobs, nvars)
       DOUBLE PRECISION :: y (nobs)
       DOUBLE PRECISION :: pf (nvars)
@@ -243,7 +243,7 @@ SUBROUTINE erlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
       npass = 0
       ni = npass
       mnl = Min (mnlam, nlam)
-      bigm = 4.0D0 * Max((1 - delta), delta)
+      bigm = 4.0D0 * Max((1 - omega), omega)
       maj = bigm * maj
       IF (flmin < 1.0D0) THEN
          flmin = Max (mfl, flmin)
@@ -263,9 +263,9 @@ SUBROUTINE erlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                al = 0.0D0
                DO i = 1, nobs
                    IF (r(i) <= 0.0D0) THEN
-                       dl (i) = 2.0D0 * (1 - delta) * r(i)
+                       dl (i) = 2.0D0 * (1 - omega) * r(i)
                    ELSE
-                       dl (i) = 2.0D0 * delta * r(i)
+                       dl (i) = 2.0D0 * omega * r(i)
                    END IF
                END DO
                DO j = 1, nvars
@@ -294,13 +294,12 @@ SUBROUTINE erlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
 					 u = 0.0D0
                      DO i = 1, nobs
                      IF (r(i) <= 0.0D0) THEN
-                         dl (i) = 2.0D0 * (1 - delta) * r(i)
+                         dl (i) = 2.0D0 * (1 - omega) * r(i)
                      ELSE
-                         dl (i) = 2.0D0 * delta * r(i)
+                         dl (i) = 2.0D0 * omega * r(i)
                      END IF
                          u = u + dl (i) * x (i, k)
                      END DO
-                     u = dot_product (r, x(:, k))
                      u = maj (k) * b (k) + u / nobs
                      v = al * pf (k)
                      v = Abs (u) - v
@@ -325,9 +324,9 @@ SUBROUTINE erlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                IF (ni > pmax) EXIT
                DO i = 1, nobs
                    IF (r(i) <= 0.0D0) THEN
-                       dl (i) = 2.0D0 * (1 - delta) * r(i)
+                       dl (i) = 2.0D0 * (1 - omega) * r(i)
                    ELSE
-                       dl (i) = 2.0D0 * delta * r(i)
+                       dl (i) = 2.0D0 * omega * r(i)
                    END IF
                END DO
                d = sum (dl) / (nobs * bigm)
@@ -347,13 +346,12 @@ SUBROUTINE erlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
 					 u = 0.0D0
                      DO i = 1, nobs
                      IF (r(i) <= 0.0D0) THEN
-                         dl (i) = 2.0D0 * (1 - delta) * r(i)
+                         dl (i) = 2.0D0 * (1 - omega) * r(i)
                      ELSE
-                         dl (i) = 2.0D0 * delta * r(i)
+                         dl (i) = 2.0D0 * omega * r(i)
                      END IF
                          u = u + dl (i) * x (i, k)
                      END DO
-                     u = dot_product (r, x(:, k))
                      u = maj (k) * b (k) + u / nobs
                      v = al * pf (k)
                      v = Abs (u) - v
@@ -370,9 +368,9 @@ SUBROUTINE erlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                   END DO      
                   DO i = 1, nobs
                       IF (r(i) <= 0.0D0) THEN
-                          dl (i) = 2.0D0 * (1 - delta) * r(i)
+                          dl (i) = 2.0D0 * (1 - omega) * r(i)
                       ELSE
-                          dl (i) = 2.0D0 * delta * r(i)
+                          dl (i) = 2.0D0 * omega * r(i)
                       END IF
                   END DO
                   d = sum (dl) / (nobs * bigm)

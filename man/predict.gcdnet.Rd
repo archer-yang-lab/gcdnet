@@ -19,7 +19,7 @@ type=c("class","link"), ...)
 \arguments{
 		\item{object}{fitted \code{\link{gcdnet}} model object.}
 		\item{newx}{matrix of new values for \code{x} at which predictions are
-		to be made. NOTE: \code{newx} must be a matrix, \code{predict} function does not accept a vector or other formats of code{newx}.}
+		to be made. NOTE: \code{newx} must be a matrix, \code{predict} function does not accept a vector or other formats of \code{newx}.}
 		\item{s}{value(s) of the penalty parameter \code{lambda} at which
 		predictions are required. Default is the entire sequence used to
 		create the model. }
