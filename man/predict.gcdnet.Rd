@@ -4,6 +4,7 @@
 \alias{predict.sqsvmpath}
 \alias{predict.logitpath}
 \alias{predict.lspath}
+\alias{predict.erpath}
 \title{make predictions from a "gcdnet" object.}
 
 \description{

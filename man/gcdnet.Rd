@@ -4,12 +4,13 @@
 \description{Fits a regularization path for large margin classifiers at a sequence of regularization parameters lambda.}
 \usage{
 gcdnet(x, y, nlambda = 100, 
-		method = c("hhsvm", "logit", "sqsvm", "ls"),
+		method = c("hhsvm", "logit", "sqsvm", "ls", "er"),
 		lambda.factor = ifelse(nobs < nvars, 0.01, 1e-04), 
 		lambda = NULL, lambda2 = 0, 
 		pf = rep(1, nvars), pf2 = rep(1, nvars), exclude, 
 		dfmax = nvars + 1, pmax = min(dfmax * 1.2, 
-	    nvars), standardize = TRUE, eps = 1e-8, maxit = 1e6, delta = 2)
+	    nvars), standardize = TRUE, eps = 1e-8, maxit = 1e6, 
+	    delta = 2, omega = 0.5)
 }
 \arguments{
 		\item{x}{matrix of predictors, of dimension \eqn{N \times p}{N*p}; each row is an observation vector.}
@@ -22,6 +23,7 @@ gcdnet(x, y, nlambda = 100,
 		\item \code{"sqsvm"} Squared hinge loss,
 		\item \code{"logit"} logistic loss,
 		\item \code{"ls"} least square loss.
+		\item \code{"er"} expectile regression loss.
 		} Default is \code{"hhsvm"}.}
 		\item{lambda.factor}{The factor for getting the minimal lambda in \code{lambda} sequence, where \code{min(lambda)} = \code{lambda.factor} * \code{max(lambda)}.  \code{max(lambda)} is the smallest value of \code{lambda} for which all coefficients are zero. The default depends on the relationship between \eqn{N} (the number of rows in the matrix of predictors) and \eqn{p}{p} (the number of predictors). If \eqn{N > p}, the default is \code{0.0001},
 		close to zero.  If \eqn{N<p}, the default is \code{0.01}.
@@ -63,13 +65,15 @@ gcdnet(x, y, nlambda = 100,
 
 		\item{maxit}{maximum number of outer-loop iterations allowed at fixed lambda value. Default is 1e6. If models do not converge, consider increasing \code{maxit}.}
 
-		\item{delta}{the parameter \eqn{\delta}{delta} in HHSVM model. Default is 2.}
+		\item{delta}{the parameter \eqn{\delta}{delta} in the HHSVM model. Default is 2.}
+		\item{omega}{the parameter \eqn{\omega}{omega} in the expectile regression model. Default is 0.5.}
+		
 }
 
 \details{
 Note that the objective function in \code{gcdnet} is
 \deqn{Loss(y, X, beta))/N + lambda1 * |beta| + 0.5 * lambda2 * beta^2}
-where the penalty is a combination of L1 and L2 term. Users can specify the loss function to use, options include Huberized squared hinge loss, Squared hinge loss, least square loss and logistic regression. Users can also tweak the penalty by choosing different \eqn{lambda2} and penalty factor. 
+where the penalty is a combination of L1 and L2 term. Users can specify the loss function to use, options include Huberized squared hinge loss, Squared hinge loss, least square loss, logistic regression and expectile regression loss. Users can also tweak the penalty by choosing different \eqn{lambda2} and penalty factor. 
 
 For computing speed reason, if models are not converging or running slow, consider increasing \code{eps}, decreasing
 \code{nlambda}, or increasing \code{lambda.factor} before increasing
@@ -190,6 +194,8 @@ plot(m2)
 # solution paths for the penalized logistic regression
 m3 <- gcdnet(x=FHT$x,y=FHT$y,lambda2=0.01,method="logit")
 plot(m3)
+m4 <- gcdnet(x=FHT$x,y=FHT$y,omega=0.9,lambda2=1,method="er")
+plot(m4)
 }
 \keyword{models}
 \keyword{regression}

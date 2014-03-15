@@ -8,16 +8,19 @@ cv.hsvmpath,
 cv.logitpath,
 cv.sqsvmpath,
 cv.lspath,
+cv.erpath,
 predict.gcdnet,
 predict.hsvmpath,
 predict.logitpath,
 predict.sqsvmpath,
 predict.lspath,
+predict.erpath,
 coef.gcdnet,
 coef.hsvmpath,
 coef.sqsvmpath,
 coef.logitpath,
-coef.lspath)
+coef.lspath,
+coef.erpath)
 
 S3method("print","gcdnet")
 S3method("coef","gcdnet")
