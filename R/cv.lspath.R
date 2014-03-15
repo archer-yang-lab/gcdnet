@@ -1,6 +1,6 @@
 cv.lspath <- function(outlist, lambda, x, y, foldid, 
     pred.loss, delta, omega) {
-    typenames <- c(misclass = "Misclassification Error", loss = "Margin Based Loss")
+    typenames <- c(misclass = "Misclassification Error", loss = "Least Square Loss")
     if (pred.loss == "default") 
         pred.loss <- "loss"
     if (!match(pred.loss, c("loss"), FALSE)) {
