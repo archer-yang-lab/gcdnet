@@ -1,8 +1,8 @@
 gcdnet <- function(x, y, nlambda = 100, method = c("hhsvm", 
-    "logit", "sqsvm", "ls"), lambda.factor = ifelse(nobs < nvars, 0.01, 
+    "logit", "sqsvm", "ls", "er"), lambda.factor = ifelse(nobs < nvars, 0.01, 
     1e-04), lambda = NULL, lambda2 = 0, pf = rep(1, nvars), pf2 = rep(1, nvars), exclude, 
     dfmax = nvars + 1, pmax = min(dfmax * 1.2, nvars), standardize = TRUE, 
-    eps = 1e-08, maxit = 1e+06, delta = 2) {
+    eps = 1e-08, maxit = 1e+06, delta = 2, omega = 0.5) {
     #################################################################################
     #data setup
     method <- match.arg(method)
@@ -66,6 +66,9 @@ gcdnet <- function(x, y, nlambda = 100, method = c("hhsvm",
 	sqsvm = sqsvmpath(x, y, nlam, flmin, 
         ulam, isd, eps, dfmax, pmax, jd, pf, pf2, maxit, lam2, nobs, 
         nvars, vnames),
+	er = erpath(x, y, nlam, flmin, 
+        ulam, isd, eps, dfmax, pmax, jd, pf, pf2, maxit, lam2, omega, 
+        nobs, nvars, vnames),
 	ls = lspath(x, y, nlam, flmin, 
 	    ulam, isd, eps, dfmax, pmax, jd, pf, pf2, maxit, lam2, nobs, 
 	    nvars, vnames))

@@ -1,11 +1,11 @@
 cv.gcdnet <- function(x, y, lambda = NULL, pred.loss = c("misclass", 
-    "loss"), nfolds = 5, foldid, delta = 2, ...) {
+    "loss"), nfolds = 5, foldid, delta = 2, omega = 0.5, ...) {
     if (missing(pred.loss)) 
         pred.loss <- "default" else pred.loss <- match.arg(pred.loss)
     N <- nrow(x)
     ###Fit the model once to get dimensions etc of output
     y <- drop(y)
-    gcdnet.object <- gcdnet(x, y, lambda = lambda, delta = delta, 
+    gcdnet.object <- gcdnet(x, y, lambda = lambda, delta = delta, omega = omega,
         ...)
     lambda <- gcdnet.object$lambda
     # predict -> coef
@@ -20,12 +20,12 @@ cv.gcdnet <- function(x, y, lambda = NULL, pred.loss = c("misclass",
         which <- foldid == i
         y_sub <- y[!which]
         outlist[[i]] <- gcdnet(x = x[!which, , drop = FALSE], 
-            y = y_sub, lambda = lambda, delta = delta, ...)
+            y = y_sub, lambda = lambda, delta = delta, omega = omega, ...)
     }
     ###What to do depends on the pred.loss and the model fit
     fun <- paste("cv", class(gcdnet.object)[[2]], sep = ".")
     cvstuff <- do.call(fun, list(outlist, lambda, x, y, foldid, 
-        pred.loss, delta))
+        pred.loss, delta, omega))
     cvm <- cvstuff$cvm
     cvsd <- cvstuff$cvsd
     cvname <- cvstuff$name

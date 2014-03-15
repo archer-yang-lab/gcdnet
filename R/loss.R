@@ -11,3 +11,17 @@ hubercls <- function(r, delta) {
     }
     d
 } 
+
+ercls <- function(r, omega) {
+    d <- matrix(NA, nrow(r), ncol(r))
+    for (i in 1:nrow(r)) {
+        for (j in 1:ncol(r)) {
+            if (r[i, j] <= 0) 
+                d[i, j] <- (1 - omega) * r[i, j] ^ 2
+			else {
+			 	d[i, j] <- omega * r[i, j] ^ 2
+            }
+        }
+    }
+    d
+} 
