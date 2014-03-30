@@ -146,7 +146,17 @@ SUBROUTINE erlassoNET (omega, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, pmax,
       END IF
       pf = Max (0.0D0, pf)
       pf2 = Max (0.0D0, pf2)
-      CALL standard (nobs, nvars, x, ju, isd, xmean, xnorm, maj)
+! special standardize treatment to expectile  
+      DO j=1,nvars                                  
+          IF(ju(j)==1) THEN                         
+              maj(j)=dot_product(x(:,j),x(:,j))/nobs
+              IF(isd==1) THEN
+                  xnorm(j)=sqrt(maj(j))    !standard deviation               
+                  x(:,j)=x(:,j)/xnorm(j)
+                  maj(j)=1.0D0
+              ENDIF
+          ENDIF
+      ENDDO
       CALL erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
      & pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, ibeta, &
      & nbeta, alam, npass, jerr)
@@ -159,8 +169,6 @@ SUBROUTINE erlassoNET (omega, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, pmax,
                beta (j, l) = beta (j, l) / xnorm (ibeta(j))
             END DO
          END IF
-         b0 (l) = b0 (l) - dot_product (beta(1:nk, l), &
-        & xmean(ibeta(1:nk)))
       END DO
       DEALLOCATE (ju, xmean, xnorm, maj)
       RETURN

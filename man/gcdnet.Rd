@@ -56,8 +56,7 @@ gcdnet(x, y, nlambda = 100,
 		\item{pmax}{limit the maximum number of variables ever to be nonzero. For example once \eqn{\beta} enters the model, no matter how many times it exits or re-enters model through the path, it will be counted only once. Default is \code{min(dfmax*1.2,p)}.}
 
 		\item{standardize}{logical flag for variable standardization, prior to
-		fitting the model sequence. If \code{TRUE}, x matrix is normalized such that sum squares of each column \eqn{\sum^N_{i=1}x_{ij}^2/N=1}{<Xj,Xj>/N=1}. Note that x is always centered (i.e. \eqn{\sum^N_{i=1}x_{ij}=0}{sum(Xj)=0}) no matter \code{standardize} is \code{TRUE} or \code{FALSE}. The coefficients are always returned on
-		the original scale. Default is is \code{TRUE}.}
+		fitting the model sequence. If \code{TRUE}, x matrix is normalized such that sum squares of each column \eqn{\sum^N_{i=1}x_{ij}^2/N=1}{<Xj,Xj>/N=1}. Note that for the least squares, logistic regression, HHSVM, squared hinge SVM, x is always centered (i.e. \eqn{\sum^N_{i=1}x_{ij}=0}{sum(Xj)=0}) no matter \code{standardize} is \code{TRUE} or \code{FALSE}. However for the expectile regression, x is always NOT centered. The coefficients are always returned on the original scale. Default is is \code{TRUE}.}
 
 		\item{eps}{convergence threshold for coordinate majorization descent. Each inner
 		coordinate majorization descent loop continues until the relative change in any
@@ -65,8 +64,8 @@ gcdnet(x, y, nlambda = 100,
 
 		\item{maxit}{maximum number of outer-loop iterations allowed at fixed lambda value. Default is 1e6. If models do not converge, consider increasing \code{maxit}.}
 
-		\item{delta}{the parameter \eqn{\delta}{delta} in the HHSVM model. Default is 2.}
-		\item{omega}{the parameter \eqn{\omega}{omega} in the expectile regression model. Default is 0.5.}
+		\item{delta}{the parameter \eqn{\delta}{delta} in the HHSVM model. The value must be greater than 0. Default is 2.}
+		\item{omega}{the parameter \eqn{\omega}{omega} in the expectile regression model. The value must be in (0,1). Default is 0.5.}
 		
 }
 
