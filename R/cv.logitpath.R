@@ -27,9 +27,7 @@ cv.logitpath <- function(outlist, lambda, x, y, foldid,
     predmat <- pmin(pmax(predmat, fmin), fmax)
     cvraw <- switch(pred.loss, loss = 2 * log(1 + exp(-y * predmat)), 
         misclass = (y != ifelse(predmat > 0, 1, -1)))
-    cvob <- cvcompute(cvraw, foldid, nlams)
-    cvraw <- cvob$cvraw
-    N <- cvob$N
+    N <- length(y) - apply(is.na(predmat), 2, sum)
     cvm <- apply(cvraw, 2, mean, na.rm = TRUE)
     cvsd <- sqrt(apply(scale(cvraw, cvm, FALSE)^2, 2, mean, na.rm = TRUE)/(N - 
         1))

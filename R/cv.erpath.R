@@ -20,10 +20,8 @@ cv.erpath <- function(outlist, lambda, x, y, foldid,
         predmat[which, seq(nlami)] <- preds
         nlams[i] <- nlami
     }
-    cvraw <- ercls(predmat, omega)
-    cvob <- cvcompute(cvraw, foldid, nlams)
-    cvraw <- cvob$cvraw
-    N <- cvob$N
+    cvraw <- ercls(y-predmat, omega)
+    N <- length(y) - apply(is.na(predmat), 2, sum)
     cvm <- apply(cvraw, 2, mean, na.rm = TRUE)
     cvsd <- sqrt(apply(scale(cvraw, cvm, FALSE)^2, 2, mean, na.rm = TRUE)/(N - 
         1))

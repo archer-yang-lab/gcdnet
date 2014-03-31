@@ -21,9 +21,7 @@ cv.lspath <- function(outlist, lambda, x, y, foldid,
         nlams[i] <- nlami
     }
     cvraw <- (y-predmat)^2
-    cvob <- cvcompute(cvraw, foldid, nlams)
-    cvraw <- cvob$cvraw
-    N <- cvob$N
+    N <- length(y) - apply(is.na(predmat), 2, sum)
     cvm <- apply(cvraw, 2, mean, na.rm = TRUE)
     cvsd <- sqrt(apply(scale(cvraw, cvm, FALSE)^2, 2, mean, na.rm = TRUE)/(N - 
         1))
