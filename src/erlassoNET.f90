@@ -330,13 +330,13 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                   END IF
                END DO
                IF (ni > pmax) EXIT
-               DO i = 1, nobs
-                   IF (r(i) <= 0.0D0) THEN
-                       dl (i) = 2.0D0 * (1 - omega) * r(i)
-                   ELSE
-                       dl (i) = 2.0D0 * omega * r(i)
-                   END IF
-               END DO
+!                DO i = 1, nobs
+!                    IF (r(i) <= 0.0D0) THEN
+!                        dl (i) = 2.0D0 * (1 - omega) * r(i)
+!                    ELSE
+!                        dl (i) = 2.0D0 * omega * r(i)
+!                    END IF
+!                END DO
 !                d = sum (dl) / (nobs * bigm)
 !                IF (d /= 0.0D0) THEN
 !                   b (0) = b (0) + d
@@ -374,13 +374,13 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                         r = r - x (:, k) * d
                      END IF
                   END DO      
-                  DO i = 1, nobs
-                      IF (r(i) <= 0.0D0) THEN
-                          dl (i) = 2.0D0 * (1 - omega) * r(i)
-                      ELSE
-                          dl (i) = 2.0D0 * omega * r(i)
-                      END IF
-                  END DO
+!                   DO i = 1, nobs
+!                       IF (r(i) <= 0.0D0) THEN
+!                           dl (i) = 2.0D0 * (1 - omega) * r(i)
+!                       ELSE
+!                           dl (i) = 2.0D0 * omega * r(i)
+!                       END IF
+!                   END DO
 !                   d = sum (dl) / (nobs * bigm)
 !                   IF (d /= 0.0D0) THEN
 !                      b (0) = b (0) + d
