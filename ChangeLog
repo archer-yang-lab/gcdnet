@@ -4,7 +4,7 @@ Please find below the list of the various changes and improvements that were par
 1.0.5:
 * [added] Now the expectile regression model is supported.
 * [improved] Improved the cross-validation implementation.
-* [fixed] Fixed a lambda interpolation bug in predict functions.
+* [fixed] Fixed a lambda interpolation bug in predict and coef functions.
 
 1.0.4:
 * [changed] Changed the package title.
