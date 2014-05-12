@@ -1,27 +1,7 @@
 hubercls <- function(r, delta) {
-    d <- matrix(NA, nrow(r), ncol(r))
-    for (i in 1:nrow(r)) {
-        for (j in 1:ncol(r)) {
-            if (r[i, j] > 1) 
-                d[i, j] <- 0 else {
-                if (r[i, j] <= (1 - delta)) 
-                  d[i, j] <- 1 - r[i, j] - 0.5 * delta else d[i, j] <- 0.5 * (1 - r[i, j])^2/delta
-            }
-        }
-    }
-    d
+  (1 - r - 0.5 * delta) * (r <= 1 - delta) + 0.5 * (1 - r)^2 / delta * (r <= 1) * (r > 1 - delta)
 } 
 
 ercls <- function(r, omega) {
-    d <- matrix(NA, nrow(r), ncol(r))
-    for (i in 1:nrow(r)) {
-        for (j in 1:ncol(r)) {
-            if (r[i, j] <= 0) 
-                d[i, j] <- (1 - omega) * r[i, j] ^ 2
-			else {
-			 	d[i, j] <- omega * r[i, j] ^ 2
-            }
-        }
-    }
-    d
+  abs(omega - (r < 0)) * r^2
 } 

@@ -77,7 +77,8 @@
 ! REFERENCES:
 !    Yang, Y. and Zou, H. (2012). An Efficient Algorithm for Computing The HHSVM and Its Generalizations.
 !    Journal of Computational and Graphical Statistics, 22, 396-415. 
-
+!
+! MODIFIED BY YUWEN GU 04/25/2014
 
 SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, &
 & pmax, nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, &
@@ -131,7 +132,7 @@ SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, &
       jerr = jerr + ierr
       IF (jerr /= 0) RETURN
       CALL chkvars (nobs, nvars, x, ju)
-      IF (jd(1) > 0) ju (jd(2:(jd(1)+1))) = 0
+      IF (jd(1) > 0) ju(jd(2:(jd(1)+1))) = 0
       IF (maxval(ju) <= 0) THEN
          jerr = 7777
          RETURN
@@ -165,15 +166,19 @@ SUBROUTINE hsvmlassoNET (delta, lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, &
       DEALLOCATE (ju, xmean, xnorm, maj)
       RETURN
 END SUBROUTINE hsvmlassoNET
-! --------------------------------------------------
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      ! ---------------- hsvmlassoNETpath ---------------- !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
 & pf, pf2, dfmax, pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, m, &
 & nbeta, alam, npass, jerr)
 ! --------------------------------------------------
       IMPLICIT NONE
         ! - - - arg types - - -
-      DOUBLE PRECISION, PARAMETER :: big = 9.9E30
-      DOUBLE PRECISION, PARAMETER :: mfl = 1.0E-6
+      DOUBLE PRECISION, PARAMETER :: big = 9.9D30
+      DOUBLE PRECISION, PARAMETER :: mfl = 1.0D-6
       INTEGER, PARAMETER :: mnlam = 6
       INTEGER :: mnl
       INTEGER :: nobs
@@ -223,8 +228,8 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
       INTEGER :: ni
       INTEGER :: me
       INTEGER, DIMENSION (:), ALLOCATABLE :: mm
-! - - - begin - - -
-! - - - allocate variables - - -
+      ! - - - begin main program - - - !
+      ! - - - allocate variables - - - !
       ALLOCATE (b(0:nvars), STAT=jerr)
       ALLOCATE (oldbeta(0:nvars), STAT=ierr)
       jerr = jerr + ierr
@@ -233,7 +238,9 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
       ALLOCATE (r(1:nobs), STAT=ierr)
       jerr = jerr + ierr
       IF (jerr /= 0) RETURN
-! - - - some initial setup - - -
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          ! ---------- Initial setup ---------- !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       r = 0.0D0
       b = 0.0D0
       oldbeta = 0.0D0
@@ -242,189 +249,209 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
       npass = 0
       ni = npass
       mnl = Min (mnlam, nlam)
-      maj = 2.0 * maj / delta
+      maj = maj / delta
       IF (flmin < 1.0D0) THEN
-         flmin = Max (mfl, flmin)
-         alf = flmin ** (1.0D0/(nlam-1.0D0))
+         flmin = Max(mfl, flmin)
+         alf = flmin ** (1.0D0/(DBLE(nlam)-1.0D0))
       END IF
-! --------- lambda loop ----------------------------
-      DO l = 1, nlam
-         IF (flmin >= 1.0D0) THEN
-            al = ulam (l)
-         ELSE
-            IF (l > 2) THEN
-               al = al * alf
-            ELSE IF (l == 1) THEN
-               al = big
-            ELSE IF (l == 2) THEN
-               al = 0.0D0
-               DO i = 1, nobs
-                  IF (r(i) > 1.0D0) THEN
-                     dl (i) = 0.0D0
-                  ELSE IF (r(i) <= (1-delta)) THEN
-                     dl (i) = - 1.0D0
-                  ELSE
-                     dl (i) = (r(i)-1.0D0) / delta
-                  END IF
-               END DO
-               DO j = 1, nvars
-                  IF (ju(j) /= 0) THEN
-                     IF (pf(j) > 0.0D0) THEN
-                        u = dot_product (dl*y, x(:, j))
-                        al = Max (al, Abs(u)/pf(j))
-                     END IF
-                  END IF
-               END DO
-               al = al * alf / nobs
-            END IF
-         END IF
-         ctr = 0
-        ! --------- outer loop ----------------------------
-         DO
-            oldbeta (0) = b (0)
-            IF (ni > 0) oldbeta (m(1:ni)) = b (m(1:ni))
-        ! --middle loop-------------------------------------
-            DO
-               npass = npass + 1
-               dif = 0.0D0
-               DO k = 1, nvars
-                  IF (ju(k) /= 0) THEN
-                     oldb = b (k)
-                     u = 0.0D0
-                     DO i = 1, nobs
-                  IF (r(i) > 1.0D0) THEN
-                     dl (i) = 0.0D0
-                  ELSE IF (r(i) <= (1-delta)) THEN
-                     dl (i) = - 1.0D0
-                  ELSE
-                     dl (i) = (r(i)-1.0D0) / delta
-                  END IF
-                        u = u + dl (i) * y (i) * x (i, k)
-                     END DO
-                     u = maj (k) * b (k) - u / nobs
-                     v = al * pf (k)
-                     v = Abs (u) - v
-                     IF (v > 0.0D0) THEN
-                     	b (k) = sign (v, u) / (maj(k) + pf2(k) * lam2)
-                     ELSE
-                        b (k) = 0.0D0
-                     END IF
-                     d = b (k) - oldb
-                     IF (Abs(d) > 0.0D0) THEN
-                        dif = Max (dif, 2.0*d**2/delta)
-                        r = r + y * x (:, k) * d
-                        IF (mm(k) == 0) THEN
-                           ni = ni + 1
-                           IF (ni > pmax) EXIT
-                           mm (k) = ni
-                           m (ni) = k !indicate which one is non-zero
-                        END IF
-                     END IF
-                  END IF
-               END DO
-               IF (ni > pmax) EXIT
-               d = 0.0D0
-               DO i = 1, nobs
-               IF (r(i) > 1.0D0) THEN
-                  dl (i) = 0.0D0
-               ELSE IF (r(i) <= (1-delta)) THEN
-                  dl (i) = - 1.0D0
-               ELSE
-                  dl (i) = (r(i)-1.0D0) / delta
-               END IF
-                  d = d + dl (i) * y (i)
-               END DO
-               d = - 0.5D0 * delta * d / nobs
-               IF (d /= 0.0D0) THEN
-                  b (0) = b (0) +  d
-                  r = r + y * d
-                  dif = Max (dif, 2.0*d**2/delta)
-               END IF
-               IF (dif < eps) EXIT
-        ! --inner loop----------------------
-               DO
-                  npass = npass + 1
-                  dif = 0.0D0
-                  DO j = 1, ni
-                     k = m (j)
-                     oldb = b (k)
-                     u = 0.0D0
-                     DO i = 1, nobs
-                  IF (r(i) > 1.0D0) THEN
-                     dl (i) = 0.0D0
-                  ELSE IF (r(i) <= (1-delta)) THEN
-                     dl (i) = - 1.0D0
-                  ELSE
-                     dl (i) = (r(i)-1.0D0) / delta
-                  END IF
-                        u = u + dl (i) * y (i) * x (i, k)
-                     END DO
-                     u = maj (k) * b (k) - u / nobs
-                     v = al * pf (k)
-                     v = Abs (u) - v
-                     IF (v > 0.0D0) THEN
-                        b (k) = sign (v, u) / (maj(k) + pf2(k) * lam2)
-                     ELSE
-                        b (k) = 0.0D0
-                     END IF
-                     d = b (k) - oldb
-                     IF (Abs(d) > 0.0D0) THEN
-                        dif = Max (dif, 2.0*d**2/delta)
-                        r = r + y * x (:, k) * d
-                     END IF
-                  END DO
-                  d = 0.0D0
-                  DO i = 1, nobs
-                  IF (r(i) > 1.0D0) THEN
-                     dl (i) = 0.0D0
-                  ELSE IF (r(i) <= (1-delta)) THEN
-                     dl (i) = - 1.0D0
-                  ELSE
-                     dl (i) = (r(i)-1.0D0) / delta
-                  END IF
-                     d = d + dl (i) * y (i)
-                  END DO
-                  d = - 0.5D0 * delta * d / nobs
-                  IF (d /= 0.0D0) THEN
-                     b (0) = b (0) + d
-                     r = r + y * d
-                     dif = Max (dif, 2.0*d**2/delta)
-                  END IF
-                  IF (dif < eps) EXIT
-               END DO
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      ! ----------------- lambda loop ------------------- !
+      ! ------------ This is the outest loop ------------ !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      DO l = 1, nlam !!! begin lambda loop (the outest loop)
+        IF (flmin >= 1.0D0) THEN
+          al = ulam (l)
+        ELSE
+          IF (l > 2) THEN
+            al = al * alf
+          ELSE IF (l == 1) THEN
+            al = big
+          ELSE IF (l == 2) THEN
+            al = 0.0D0
+            DO i = 1, nobs
+              IF (r(i) > 1.0D0) THEN
+                dl (i) = 0.0D0
+              ELSE IF (r(i) <= (1-delta)) THEN
+                dl (i) = - 1.0D0
+              ELSE
+                dl (i) = (r(i)-1.0D0) / delta
+              END IF
             END DO
+            DO j = 1, nvars
+              IF (ju(j) /= 0) THEN
+                IF (pf(j) > 0.0D0) THEN
+                  u = dot_product(dl * y, x(:, j))
+                  al = Max(al, Abs(u)/pf(j))
+                END IF
+              END IF
+            END DO
+            al = al * alf / nobs
+          END IF
+        END IF
+        ctr = 0
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        ! ------------------ outer loop -------------------- !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        DO !!! begin outer loop
+          oldbeta(0) = b(0)
+          IF (ni > 0) oldbeta(m(1:ni)) = b(m(1:ni))
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        ! ----------------- middle loop -------------------- !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+          DO
+            npass = npass + 1
+            dif = 0.0D0
+            DO k = 1, nvars !!! begin updating beta's
+              IF (ju(k) /= 0) THEN
+                oldb = b (k)
+                u = 0.0D0
+                DO i = 1, nobs
+                  IF (r(i) > 1.0D0) THEN
+                    dl (i) = 0.0D0
+                  ELSE IF (r(i) <= (1-delta)) THEN
+                    dl (i) = - 1.0D0
+                  ELSE
+                    dl (i) = (r(i)-1.0D0) / delta
+                  END IF
+                  u = u + dl(i) * y (i) * x (i, k)
+                END DO
+                u = maj(k) * b(k) - u / nobs
+                v = al * pf (k)
+                v = Abs(u) - v
+                IF (v > 0.0D0) THEN
+                  b(k) = SIGN(v, u) / (maj(k) + pf2(k) * lam2)
+                ELSE
+                  b(k) = 0.0D0
+                END IF
+
+                d = b(k) - oldb
+                IF (ABS(d) > 0.0D0) THEN
+                  dif = Max (dif, d**2)
+                  r = r + y * x (:, k) * d
+                  IF (mm(k) == 0) THEN
+                    ni = ni + 1 !!! number of variables ever entered the model
+                    IF (ni > pmax) EXIT
+                    mm(k) = ni
+                    m(ni) = k !!! indicate which coefficient is non-zero
+                  END IF
+                END IF
+              END IF
+            END DO !!! end updating beta's
             IF (ni > pmax) EXIT
-        !--- this is the final check ------------------------
-            vrg = 1
-            IF ((b(0)-oldbeta(0))**2 >= eps) vrg = 0
-            DO j = 1, ni
-               IF ((b(m(j))-oldbeta(m(j)))**2 >= eps) THEN
-                  vrg = 0
-                  EXIT
-               END IF
-            END DO
-            IF (vrg == 1) EXIT
-            ctr = ctr + 1
-            IF (ctr > maxit) THEN
-               jerr = - l
-               RETURN
+
+            d = 0.0D0
+            DO i = 1, nobs !!! begin updating beta0
+              IF (r(i) > 1.0D0) THEN
+                dl (i) = 0.0D0
+              ELSE IF (r(i) <= (1-delta)) THEN
+                dl (i) = - 1.0D0
+              ELSE
+                dl (i) = (r(i)-1.0D0) / delta
+              END IF
+              d = d + dl (i) * y (i)
+            END DO !!! end updating beta0
+            d = - 0.5D0 * delta * d / nobs
+            IF (ABS(d) > 0.0D0) THEN
+              b (0) = b (0) +  d
+              r = r + y * d
+              dif = Max(dif, d**2)
             END IF
-         END DO
-    ! final update variable save results------------
-         IF (ni > pmax) THEN
-            jerr = - 10000 - l
-            EXIT
-         END IF
-         IF (ni > 0) beta (1:ni, l) = b (m(1:ni))
-         nbeta (l) = ni
-         b0 (l) = b (0)
-         alam (l) = al
-         nalam = l
-         IF (l < mnl) CYCLE
-         IF (flmin >= 1.0D0) CYCLE
-         me = count (beta(1:ni, l) /= 0.0D0)
-         IF (me > dfmax) EXIT
-      END DO
+            IF (dif < eps * delta) EXIT
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          ! -----------------inner loop ------------------- !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            DO !!! begin inner loop
+              npass = npass + 1
+              dif = 0.0D0
+              DO j = 1, ni
+                k = m(j)
+                oldb = b(k)
+                u = 0.0D0
+                DO i = 1, nobs
+                  IF (r(i) > 1.0D0) THEN
+                    dl (i) = 0.0D0
+                  ELSE IF (r(i) <= (1-delta)) THEN
+                    dl(i) = - 1.0D0
+                  ELSE
+                    dl(i) = (r(i)-1.0D0) / delta
+                  END IF
+                  u = u + dl(i) * y(i) * x(i, k)
+                END DO
+                u = maj(k) * b(k) - u / nobs
+                v = al * pf(k)
+                v = Abs(u) - v
+                IF (v > 0.0D0) THEN
+                  b(k) = sign(v, u) / (maj(k) + pf2(k) * lam2)
+                ELSE
+                  b(k) = 0.0D0
+                END IF
+                d = b(k) - oldb
+                IF (Abs(d) > 0.0D0) THEN
+                  dif = Max (dif, d**2)
+                  r = r + y * x(:, k) * d
+                END IF
+              END DO
+              d = 0.0D0
+              DO i = 1, nobs
+                IF (r(i) > 1.0D0) THEN
+                  dl (i) = 0.0D0
+                ELSE IF (r(i) <= (1-delta)) THEN
+                  dl (i) = - 1.0D0
+                ELSE
+                  dl (i) = (r(i)-1.0D0) / delta
+                END IF
+                d = d + dl (i) * y (i)
+              END DO
+              d = - 0.5D0 * delta * d / nobs
+              IF (ABS(d) > 0.0D0) THEN
+                b (0) = b (0) + d
+                r = r + y * d
+                dif = Max (dif, d**2)
+              END IF
+              IF (dif < eps * delta) EXIT
+            END DO !!! end inner loop
+          END DO !!! end middle loop
+          IF (ni > pmax) EXIT
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        ! -------------- final check ---------------- !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          vrg = 1
+          IF ((b(0)-oldbeta(0))**2 >= eps) vrg = 0
+          DO j = 1, ni
+            IF ((b(m(j))-oldbeta(m(j)))**2 >= eps) THEN
+              vrg = 0
+              EXIT
+            END IF
+          END DO
+          IF (vrg == 1) EXIT
+          ctr = ctr + 1
+          IF (ctr > maxit) THEN
+            jerr = - l
+            RETURN
+          END IF
+        END DO !!! end outer loop
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    ! ----------- final update & save results ------------ !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        IF (ni > pmax) THEN
+          jerr = - 10000 - l
+          EXIT
+        END IF
+        IF (ni > 0) beta (1:ni, l) = b (m(1:ni))
+        nbeta (l) = ni
+        b0 (l) = b (0)
+        alam (l) = al
+        nalam = l
+        IF (l < mnl) CYCLE
+        IF (flmin >= 1.0D0) CYCLE
+        me = count (ABS(beta(1:ni, l)) > 0.0D0)
+        IF (me > dfmax) EXIT
+      END DO !!! end lambda loop (the outest loop)
       DEALLOCATE (b, oldbeta, r, mm)
       RETURN
 END SUBROUTINE hsvmlassoNETpath
