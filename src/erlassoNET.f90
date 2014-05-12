@@ -70,11 +70,13 @@
 ! LICENSE: GNU GPL (version 2 or later)
 ! 
 ! AUTHORS:
-!    Yi Yang (yiyang@umn.edu) and Hui Zou (hzou@stat.umn.edu), 
+!    Yi Yang (yiyang@umn.edu), Yuwen Gu (guxxx192@umn.edu) 
+!    and Hui Zou (hzou@stat.umn.edu).
 !    School of Statistics, University of Minnesota.
 ! 
 ! REFERENCES:
-!    Yang, Y. and Zou, H. (2012). An Efficient Algorithm for Computing The HHSVM and Its Generalizations.
+!    Yang, Y. and Zou, H. (2012). An Efficient Algorithm for Computing 
+!    The HHSVM and Its Generalizations.
 !    Journal of Computational and Graphical Statistics, 22, 396-415.
 
 
@@ -255,7 +257,7 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
       maj = bigm * maj
       IF (flmin < 1.0D0) THEN
          flmin = Max (mfl, flmin)
-         alf = flmin ** (1.0D0/(nlam-1.0D0))
+         alf = flmin ** (1.0D0/(DBLE(nlam)-1.0D0))
       END IF
 ! --------- lambda loop ----------------------------
       DO l = 1, nlam

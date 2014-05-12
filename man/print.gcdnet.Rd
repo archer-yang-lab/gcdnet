@@ -18,7 +18,7 @@ The call that produced the \code{\link{gcdnet}} object is printed, followed by a
 \value{
 a two-column matrix, the first columns is the number of nonzero coefficients and the second column is \code{Lambda}.}
 
-\author{Yi Yang and Hui Zou\cr
+\author{Yi Yang, Yuwen Gu and Hui Zou\cr
 Maintainer: Yi Yang  <yiyang@umn.edu>}
 \references{
 Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for Computing The HHSVM and Its Generalizations," \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
