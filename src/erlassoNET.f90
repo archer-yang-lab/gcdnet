@@ -229,7 +229,6 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
       INTEGER :: j
       INTEGER :: l
       INTEGER :: vrg
-      INTEGER :: ctr
       INTEGER :: ierr
       INTEGER :: ni
       INTEGER :: me
@@ -289,7 +288,6 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                al = al * alf / nobs
             END IF
          END IF
-         ctr = 0
         ! --------- outer loop ----------------------------
          DO
             oldbeta (0) = b (0)
@@ -332,6 +330,11 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                   END IF
                END DO
                IF (ni > pmax) EXIT
+               IF (dif < eps) EXIT
+               IF(npass > maxit) THEN
+                    jerr=-l
+                    RETURN
+               ENDIF
 !                DO i = 1, nobs
 !                    IF (r(i) <= 0.0D0) THEN
 !                        dl (i) = 2.0D0 * (1 - omega) * r(i)
@@ -345,7 +348,7 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
 !                   r = r - d
 !                   dif = Max (dif, bigm*d**2)
 !                END IF
-               IF (dif < eps) EXIT
+
         ! --inner loop----------------------
                DO
                   npass = npass + 1
@@ -390,6 +393,10 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
 !                      dif = Max (dif, bigm*d**2)
 !                   END IF
                   IF (dif < eps) EXIT
+                  IF(npass > maxit) THEN
+                       jerr=-l
+                       RETURN
+                  ENDIF
                END DO
             END DO
             IF (ni > pmax) EXIT
@@ -403,11 +410,6 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                END IF
             END DO
             IF (vrg == 1) EXIT
-            ctr = ctr + 1
-            IF (ctr > maxit) THEN
-               jerr = - l
-               RETURN
-            END IF
          END DO
     ! final update variable save results------------
          IF (ni > pmax) THEN

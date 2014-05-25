@@ -224,7 +224,6 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
       INTEGER :: j
       INTEGER :: l
       INTEGER :: vrg
-      INTEGER :: ctr
       INTEGER :: ierr
       INTEGER :: ni
       INTEGER :: me
@@ -289,7 +288,6 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
             al = al * alf / nobs
           END IF
         END IF
-        ctr = 0
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         ! ------------------ outer loop -------------------- !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -340,8 +338,6 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
                 END IF
               END IF
             END DO !!! end updating beta's
-            IF (ni > pmax) EXIT
-
             d = 0.0D0
             DO i = 1, nobs !!! begin updating beta0
               IF (r(i) > 1.0D0) THEN
@@ -359,7 +355,12 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
               r = r + y * d
               dif = Max(dif, d**2)
             END IF
+            IF (ni > pmax) EXIT
             IF (dif < eps * delta) EXIT
+            IF(npass > maxit) THEN
+                 jerr=-l
+                 RETURN
+            ENDIF
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           ! -----------------inner loop ------------------- !
@@ -413,6 +414,10 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
                 dif = Max (dif, d**2)
               END IF
               IF (dif < eps * delta) EXIT
+              IF(npass > maxit) THEN
+                   jerr=-l
+                   RETURN
+              ENDIF
             END DO !!! end inner loop
           END DO !!! end middle loop
           IF (ni > pmax) EXIT
@@ -429,11 +434,6 @@ SUBROUTINE hsvmlassoNETpath (delta, lam2, maj, nobs, nvars, x, y, ju, &
             END IF
           END DO
           IF (vrg == 1) EXIT
-          ctr = ctr + 1
-          IF (ctr > maxit) THEN
-            jerr = - l
-            RETURN
-          END IF
         END DO !!! end outer loop
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

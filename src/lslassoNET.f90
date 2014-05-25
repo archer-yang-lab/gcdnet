@@ -215,7 +215,6 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
       INTEGER :: j
       INTEGER :: l
       INTEGER :: vrg
-      INTEGER :: ctr
       INTEGER :: ierr
       INTEGER :: ni
       INTEGER :: me
@@ -267,7 +266,6 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
                al = al * alf / nobs
             END IF
          END IF
-         ctr = 0
         ! --------- outer loop ----------------------------
          DO
             oldbeta (0) = b (0)
@@ -301,14 +299,18 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
                      END IF
                   END IF
                END DO
-               IF (ni > pmax) EXIT
                d = sum (r) / nobs
                IF (d /= 0.0D0) THEN
                   b (0) = b (0) + d
                   r = r - d
                   dif = Max (dif, d**2)
                END IF
+               IF (ni > pmax) EXIT
                IF (dif < eps) EXIT
+               IF(npass > maxit) THEN
+                   jerr=-l
+                   RETURN
+               ENDIF
         ! --inner loop----------------------
                DO
                   npass = npass + 1
@@ -338,6 +340,10 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
                      dif = Max (dif, d**2)
                   END IF
                   IF (dif < eps) EXIT
+                  IF(npass > maxit) THEN
+                      jerr=-l
+                      RETURN
+                  ENDIF
                END DO
             END DO
             IF (ni > pmax) EXIT
@@ -351,11 +357,6 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
                END IF
             END DO
             IF (vrg == 1) EXIT
-            ctr = ctr + 1
-            IF (ctr > maxit) THEN
-               jerr = - l
-               RETURN
-            END IF
          END DO
     ! final update variable save results------------
          IF (ni > pmax) THEN
