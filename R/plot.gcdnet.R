@@ -34,8 +34,8 @@ plot.gcdnet <- function(x, xvar = c("norm", "lambda"),
     if (is.null(type)) {
         if (color == FALSE) 
             matplot(index, t(beta), lty = 1, xlab = xlab, ylab = ylab, 
-                type = "l", pch = 500, col = gray.colors(12, 
-                  start = 0.05, end = 0.7, gamma = 2.2), ...) else matplot(index, t(beta), lty = 1, xlab = xlab, ylab = ylab, 
+                type = "l", pch = 500, col = rainbow(12, 
+                  start = 0.7, end = 0.95), ...) else matplot(index, t(beta), lty = 1, xlab = xlab, ylab = ylab, 
             type = "l", pch = 500, ...)
     } else matplot(index, t(beta), lty = 1, xlab = xlab, ylab = ylab, 
         ...)

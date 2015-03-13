@@ -56,7 +56,7 @@ gcdnet(x, y, nlambda = 100,
 		\item{pmax}{limit the maximum number of variables ever to be nonzero. For example once \eqn{\beta} enters the model, no matter how many times it exits or re-enters model through the path, it will be counted only once. Default is \code{min(dfmax*1.2,p)}.}
 
 		\item{standardize}{logical flag for variable standardization, prior to
-		fitting the model sequence. If \code{TRUE}, x matrix is normalized such that sum squares of each column \eqn{\sum^N_{i=1}x_{ij}^2/N=1}{<Xj,Xj>/N=1}. Note that for the least squares, logistic regression, HHSVM, squared hinge SVM, x is always centered (i.e. \eqn{\sum^N_{i=1}x_{ij}=0}{sum(Xj)=0}) no matter \code{standardize} is \code{TRUE} or \code{FALSE}. However for the expectile regression, x is always NOT centered. The coefficients are always returned on the original scale. Default is is \code{TRUE}.}
+		fitting the model sequence. If \code{TRUE}, x matrix is normalized such that sum squares of each column \eqn{\sum^N_{i=1}x_{ij}^2/N=1}{<Xj,Xj>/N=1}. Note that for the least squares, logistic regression, HHSVM, squared hinge SVM, x is always centered (i.e. \eqn{\sum^N_{i=1}x_{ij}=0}{sum(Xj)=0}) no matter \code{standardize} is \code{TRUE} or \code{FALSE}. Default is is \code{TRUE}.}
 
 		\item{eps}{convergence threshold for coordinate majorization descent. Each inner
 		coordinate majorization descent loop continues until the relative change in any
