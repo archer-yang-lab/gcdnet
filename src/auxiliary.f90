@@ -63,11 +63,11 @@ SUBROUTINE standard(nobs,nvars,x,ju,isd,xmean,xnorm,maj)
 ! --------------------------------------------------
     IMPLICIT NONE
     ! - - - arg types - - -
-    INTEGER::  nobs
+    INTEGER::nobs
     INTEGER::nvars
     INTEGER::isd
     INTEGER::ju(nvars)
-    DOUBLE PRECISION::  x(nobs,nvars)
+    DOUBLE PRECISION::x(nobs,nvars)
     DOUBLE PRECISION::xmean(nvars)
     DOUBLE PRECISION::xnorm(nvars)
     DOUBLE PRECISION::maj(nvars)

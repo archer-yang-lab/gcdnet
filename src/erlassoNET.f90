@@ -333,12 +333,6 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                      END IF
                   END IF
                END DO
-               IF (ni > pmax) EXIT
-               IF (dif < eps) EXIT
-               IF(npass > maxit) THEN
-                    jerr=-l
-                    RETURN
-               ENDIF
                DO i = 1, nobs
                    IF (r(i) <= 0.0D0) THEN
                        dl (i) = 2.0D0 * (1 - omega) * r(i)
@@ -352,6 +346,12 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                   r = r - d
                   dif = Max (dif, bigm*d**2)
                END IF
+               IF (ni > pmax) EXIT
+               IF (dif < eps) EXIT
+               IF(npass > maxit) THEN
+                    jerr=-l
+                    RETURN
+               ENDIF
         ! --inner loop----------------------
                DO
                   npass = npass + 1

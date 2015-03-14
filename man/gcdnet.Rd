@@ -9,7 +9,7 @@ gcdnet(x, y, nlambda = 100,
 		lambda = NULL, lambda2 = 0, 
 		pf = rep(1, nvars), pf2 = rep(1, nvars), exclude, 
 		dfmax = nvars + 1, pmax = min(dfmax * 1.2, 
-	    nvars), standardize = TRUE, eps = 1e-8, maxit = 1e6, 
+	    nvars), standardize = FALSE, eps = 1e-8, maxit = 1e6, 
 	    delta = 2, omega = 0.5)
 }
 \arguments{
@@ -56,7 +56,7 @@ gcdnet(x, y, nlambda = 100,
 		\item{pmax}{limit the maximum number of variables ever to be nonzero. For example once \eqn{\beta} enters the model, no matter how many times it exits or re-enters model through the path, it will be counted only once. Default is \code{min(dfmax*1.2,p)}.}
 
 		\item{standardize}{logical flag for variable standardization, prior to
-		fitting the model sequence. If \code{TRUE}, x matrix is normalized such that sum squares of each column \eqn{\sum^N_{i=1}x_{ij}^2/N=1}{<Xj,Xj>/N=1}. Note that for the least squares, logistic regression, HHSVM, squared hinge SVM, x is always centered (i.e. \eqn{\sum^N_{i=1}x_{ij}=0}{sum(Xj)=0}) no matter \code{standardize} is \code{TRUE} or \code{FALSE}. Default is is \code{TRUE}.}
+		fitting the model sequence. If \code{TRUE}, \code{x} matrix is normalized such that \code{x} is centered (i.e. \eqn{\sum^N_{i=1}x_{ij}=0}{sum(Xj)=0}), and sum squares of each column \eqn{\sum^N_{i=1}x_{ij}^2/N=1}{<Xj,Xj>/N=1}. If \code{x} matrix is standardized, the ending coefficients will be transformed back to the original scale. Default is \code{FALSE}.}
 
 		\item{eps}{convergence threshold for coordinate majorization descent. Each inner
 		coordinate majorization descent loop continues until the relative change in any
