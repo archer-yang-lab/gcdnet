@@ -7,7 +7,7 @@ Maintainer: Yi Yang <yiyang@umn.edu>
 Depends: Matrix
 Description: This package implements a generalized coordinate descent (GCD) algorithm for computing the solution path of the hybrid Huberized support vector machine (HHSVM) and its generalization, including the LASSO and elastic net (adaptive) penalized least squares, logistic regression, HHSVM, squared hinge loss SVM and expectile regression.
 License: GPL-2
-URL: http://code.google.com/p/gcdnet/
+URL: https://github.com/emeryyi/gcdnet
 Packaged: 2012-02-21 06:53:12 UTC; yiyang
 Repository: CRAN
 Date/Publication: 2011-10-14 08:00:50
