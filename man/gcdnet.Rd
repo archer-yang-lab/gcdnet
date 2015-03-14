@@ -174,7 +174,7 @@ An object with S3 class \code{\link{gcdnet}}.
 Maintainer: Yi Yang  <yiyang@umn.edu>}
 \references{
 Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for Computing The HHSVM and Its Generalizations," \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
-BugReport: \url{http://code.google.com/p/gcdnet/}\cr
+BugReport: \url{https://github.com/emeryyi/fastcox.git}\cr
 }
 
 
