@@ -25,7 +25,7 @@ cross-validation to get coefficients or make coefficient predictions.}
 \value{The object returned depends the \dots argument which is passed on
 to the \code{\link{predict}} method for \code{\link{gcdnet}} objects.}
 \author{Yi Yang, Yuwen Gu and Hui Zou\cr
-Maintainer: Yi Yang  <yiyang@umn.edu>}
+Maintainer: Yi Yang  <yi.yang6@mcgill.ca>}
 \references{
 Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for Computing The HHSVM and Its Generalizations," \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
 BugReport: \url{https://github.com/emeryyi/fastcox.git}\cr

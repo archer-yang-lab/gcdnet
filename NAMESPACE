@@ -1,13 +1,5 @@
 useDynLib(gcdnet, .registration = TRUE)
 
-importFrom(utils,head,tail,packageDescription)
-import("Matrix")
-importFrom("graphics", "abline", "axis", "matplot", "points",
-             "segments", "text")
-importFrom("grDevices", "rainbow")
-importFrom("methods", "new")
-importFrom("stats", "approx", "coef", "predict")
-
 export(gcdnet,
 cv.gcdnet,
 cv.hsvmpath,
@@ -30,10 +22,27 @@ coef.erpath)
 
 S3method("print","gcdnet")
 S3method("coef","gcdnet")
+S3method(coef,lspath)
+S3method(coef,erpath)
+S3method(coef,hsvmpath)
+S3method(coef,logitpath)
+S3method(coef,sqsvmpath)
 S3method("coef","cv.gcdnet")
 S3method("plot","gcdnet")
 S3method("plot","cv.gcdnet")
 S3method("predict","gcdnet")
 S3method("predict","cv.gcdnet")
+S3method(predict,lspath)
+S3method(predict,erpath)
+S3method(predict,hsvmpath)
+S3method(predict,logitpath)
+S3method(predict,sqsvmpath)
 
+importFrom(utils,head,tail,packageDescription)
+import("Matrix")
+importFrom("graphics", "abline", "axis", "matplot", "points",
+             "segments", "text")
+importFrom("grDevices", "rainbow")
+importFrom("methods", "new")
+importFrom("stats", "approx", "coef", "predict")
 
