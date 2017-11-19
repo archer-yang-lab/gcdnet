@@ -1,6 +1,12 @@
-useDynLib("gcdnet")
+useDynLib(gcdnet, .registration = TRUE)
 
+importFrom(utils,head,tail,packageDescription)
 import("Matrix")
+importFrom("graphics", "abline", "axis", "matplot", "points",
+             "segments", "text")
+importFrom("grDevices", "rainbow")
+importFrom("methods", "new")
+importFrom("stats", "approx", "coef", "predict")
 
 export(gcdnet,
 cv.gcdnet,
