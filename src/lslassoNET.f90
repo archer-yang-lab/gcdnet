@@ -5,15 +5,17 @@
 ! USAGE:
 !
 ! call lslassoNET (lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, &
-! & pmax, nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, &
-! & nbeta, alam, npass, jerr)
+! pmax, nlam, flmin, ulam, eps, isd, intr, maxit, nalam, b0, beta, &
+! ibeta, nbeta, alam, npass, jerr)
 !
 ! INPUT ARGUMENTS:
 !
-!    lam2 = regularization parameter for the quadratic penalty of the coefficients
+!    lam2 = regularization parameter for the quadratic penalty
+!           of the coefficients
 !    nobs = number of observations
 !    nvars = number of predictor variables
-!    x(nobs, nvars) = matrix of predictors, of dimension N * p; each row is an observation vector.
+!    x(nobs, nvars) = matrix of predictors, of dimension N * p;
+!                     each row is an observation vector.
 !    y(nobs) = response variable.
 !    jd(jd(1)+1) = predictor variable deletion flag
 !                  jd(1) = 0  => use all variables
@@ -41,7 +43,8 @@
 !          isd = 1 => regression on standardized predictor variables
 !          Note: output solutions always reference original
 !                variables locations and scales.
-!    maxit = maximum number of outer-loop iterations allowed at fixed lambda value.
+!    intr = intercept flag (whether or not to include an intercept in fitting)
+!    maxit = maximum number of outer loops allowed at each lambda value
 !            (suggested values, maxit = 100000)
 !
 ! OUTPUT:
@@ -63,15 +66,14 @@
 !                    Solutions for larger lambdas (1:(k-1)) returned.
 !                    jerr = -k => convergence for kth lambda value not reached
 !                           after maxit (see above) iterations.
-!                    jerr = -10000-k => number of non zero coefficients along path
-!                           exceeds pmax (see above) at kth lambda value.
+!                    jerr = -10000-k => number of non zero coefficients along
+!                           path exceeds pmax (see above) at kth lambda value.
 !
 ! LICENSE: GNU GPL (version 2 or later)
 !
 ! AUTHORS:
-!    Yi Yang (yiyang@umn.edu), Yuwen Gu (guxxx192@umn.edu)
+!    Yi Yang (yi.yang6@mcgill.ca), Yuwen Gu (yuwen.gu@uconn.edu),
 !    and Hui Zou (hzou@stat.umn.edu).
-!    School of Statistics, University of Minnesota.
 !
 ! REFERENCES:
 !    Yang, Y. and Zou, H. (2012). An Efficient Algorithm for Computing
@@ -172,7 +174,7 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
 & npass, jerr, intr)
 ! --------------------------------------------------
       IMPLICIT NONE
-        ! - - - arg types - - -
+      ! ----- arg types -----
       DOUBLE PRECISION, PARAMETER :: big = 9.9E30
       DOUBLE PRECISION, PARAMETER :: mfl = 1.0E-6
       INTEGER, PARAMETER :: mnlam = 6
@@ -201,7 +203,7 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
       DOUBLE PRECISION :: b0 (nlam)
       DOUBLE PRECISION :: alam (nlam)
       DOUBLE PRECISION :: maj (nvars)
-    ! - - - local declarations - - -
+      ! ----- local declarations -----
       DOUBLE PRECISION :: d
       DOUBLE PRECISION :: dif
       DOUBLE PRECISION :: oldb
@@ -221,8 +223,8 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
       INTEGER :: ni
       INTEGER :: me
       INTEGER, DIMENSION (:), ALLOCATABLE :: mm
-! - - - begin - - -
-! - - - allocate variables - - -
+      ! ----- begin program -----
+      ! ----- allocate variables -----
       ALLOCATE (b(0:nvars), STAT=jerr)
       ALLOCATE (oldbeta(0:nvars), STAT=ierr)
       jerr = jerr + ierr
@@ -231,7 +233,7 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
       ALLOCATE (r(1:nobs), STAT=ierr)
       jerr = jerr + ierr
       IF (jerr /= 0) RETURN
-! - - - some initial setup - - -
+      ! ----- some initial setup -----
       r = y
       b = 0.0D0
       oldbeta = 0.0D0
@@ -245,9 +247,9 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
          flmin = Max (mfl, flmin)
          alf = flmin ** (1.0D0/(DBLE(nlam)-1.0D0))
       END IF
-! --------- lambda loop ----------------------------
+      ! --------- lambda loop -----------
       DO l = 1, nlam
-! --------- computing lambda ----------------------------
+         ! --------- computing lambda -----------
          IF (flmin >= 1.0D0) THEN
             al = ulam (l)
          ELSE
@@ -272,7 +274,7 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
          DO
             IF (intr == 1) oldbeta(0) = b(0)
             IF (ni > 0) oldbeta (m(1:ni)) = b (m(1:ni))
-        ! --middle loop-------------------------------------
+            ! ---------------- middle loop -----------------------
             DO
                npass = npass + 1
                dif = 0.0D0
@@ -315,7 +317,7 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
                    jerr=-l
                    RETURN
                ENDIF
-        ! --inner loop----------------------
+               ! --inner loop----------------------
                DO
                   npass = npass + 1
                   dif = 0.0D0
@@ -353,7 +355,7 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
                END DO
             END DO
             IF (ni > pmax) EXIT
-        !--- this is the final check ------------------------
+            !--- this is the final check ------------------------
             vrg = 1
             IF ((b(0)-oldbeta(0))**2 >= eps) vrg = 0
             DO j = 1, ni
@@ -364,7 +366,7 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
             END DO
             IF (vrg == 1) EXIT
          END DO
-    ! final update variable save results------------
+         ! final update variable save results------------
          IF (ni > pmax) THEN
             jerr = - 10000 - l
             EXIT
