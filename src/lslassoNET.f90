@@ -1,15 +1,15 @@
 ! --------------------------------------------------------------------------
 ! lslassoNET.f90: the GCD algorithm for least squares regression.
 ! --------------------------------------------------------------------------
-! 
+!
 ! USAGE:
-! 
+!
 ! call lslassoNET (lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, &
 ! & pmax, nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, &
 ! & nbeta, alam, npass, jerr)
-! 
+!
 ! INPUT ARGUMENTS:
-! 
+!
 !    lam2 = regularization parameter for the quadratic penalty of the coefficients
 !    nobs = number of observations
 !    nvars = number of predictor variables
@@ -24,28 +24,28 @@
 !                pf2(j) = 0 => jth variable unpenalized
 !    dfmax = limit the maximum number of variables in the model.
 !            (one of the stopping criterion)
-!    pmax = limit the maximum number of variables ever to be nonzero. 
-!           For example once beta enters the model, no matter how many 
-!           times it exits or re-enters model through the path, it will 
-!           be counted only once. 
+!    pmax = limit the maximum number of variables ever to be nonzero.
+!           For example once beta enters the model, no matter how many
+!           times it exits or re-enters model through the path, it will
+!           be counted only once.
 !    nlam = the number of lambda values
 !    flmin = user control of lambda values (>=0)
 !            flmin < 1.0 => minimum lambda = flmin*(largest lambda value)
 !            flmin >= 1.0 => use supplied lambda values (see below)
 !    ulam(nlam) = user supplied lambda values (ignored if flmin < 1.0)
-!    eps = convergence threshold for coordinate majorization descent. 
-!          Each inner coordinate majorization descent loop continues 
+!    eps = convergence threshold for coordinate majorization descent.
+!          Each inner coordinate majorization descent loop continues
 !          until the relative change in any coefficient is less than eps.
 !    isd = standarization flag:
 !          isd = 0 => regression on original predictor variables
 !          isd = 1 => regression on standardized predictor variables
 !          Note: output solutions always reference original
 !                variables locations and scales.
-!    maxit = maximum number of outer-loop iterations allowed at fixed lambda value. 
+!    maxit = maximum number of outer-loop iterations allowed at fixed lambda value.
 !            (suggested values, maxit = 100000)
-! 
+!
 ! OUTPUT:
-! 
+!
 !    nalam = actual number of lambda values (solutions)
 !    b0(nalam) = intercept values for each solution
 !    beta(pmax, nalam) = compressed coefficient values for each solution
@@ -65,23 +65,23 @@
 !                           after maxit (see above) iterations.
 !                    jerr = -10000-k => number of non zero coefficients along path
 !                           exceeds pmax (see above) at kth lambda value.
-! 
+!
 ! LICENSE: GNU GPL (version 2 or later)
-! 
+!
 ! AUTHORS:
-!    Yi Yang (yiyang@umn.edu), Yuwen Gu (guxxx192@umn.edu) 
+!    Yi Yang (yiyang@umn.edu), Yuwen Gu (guxxx192@umn.edu)
 !    and Hui Zou (hzou@stat.umn.edu).
 !    School of Statistics, University of Minnesota.
-! 
+!
 ! REFERENCES:
-!    Yang, Y. and Zou, H. (2012). An Efficient Algorithm for Computing 
+!    Yang, Y. and Zou, H. (2012). An Efficient Algorithm for Computing
 !    The HHSVM and Its Generalizations.
 !    Journal of Computational and Graphical Statistics, 22, 396-415.
 
 
 ! --------------------------------------------------
 SUBROUTINE lslassoNET (lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, pmax, &
-& nlam, flmin, ulam, eps, isd, maxit, nalam, b0, beta, ibeta, nbeta, &
+& nlam, flmin, ulam, eps, isd, intr, maxit, nalam, b0, beta, ibeta, nbeta, &
 & alam, npass, jerr)
 ! --------------------------------------------------
       IMPLICIT NONE
@@ -92,6 +92,7 @@ SUBROUTINE lslassoNET (lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, pmax, &
       INTEGER :: pmax
       INTEGER :: nlam
       INTEGER :: isd
+      INTEGER :: intr
       INTEGER :: nalam
       INTEGER :: npass
       INTEGER :: jerr
@@ -146,10 +147,10 @@ SUBROUTINE lslassoNET (lam2, nobs, nvars, x, y, jd, pf, pf2, dfmax, pmax, &
       END IF
       pf = Max (0.0D0, pf)
       pf2 = Max (0.0D0, pf2)
-      CALL standard (nobs, nvars, x, ju, isd, xmean, xnorm, maj)
+      CALL standard (nobs, nvars, x, ju, isd, intr, xmean, xnorm, maj)
       CALL lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
-     & pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, ibeta, &
-     & nbeta, alam, npass, jerr)
+           & pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, ibeta, &
+           & nbeta, alam, npass, jerr, intr)
       IF (jerr > 0) RETURN! check error after calling function
 ! - - - organize beta afterward - - -
       DO l = 1, nalam
@@ -168,7 +169,7 @@ END SUBROUTINE lslassoNET
 ! --------------------------------------------------
 SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
 & pmax, nlam, flmin, ulam, eps, maxit, nalam, b0, beta, m, nbeta, alam, &
-& npass, jerr)
+& npass, jerr, intr)
 ! --------------------------------------------------
       IMPLICIT NONE
         ! - - - arg types - - -
@@ -185,6 +186,7 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
       INTEGER :: nalam
       INTEGER :: npass
       INTEGER :: jerr
+      INTEGER :: intr
       INTEGER :: ju (nvars)
       INTEGER :: m (pmax)
       INTEGER :: nbeta (nlam)
@@ -268,7 +270,7 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
          END IF
         ! --------- outer loop ----------------------------
          DO
-            oldbeta (0) = b (0)
+            IF (intr == 1) oldbeta(0) = b(0)
             IF (ni > 0) oldbeta (m(1:ni)) = b (m(1:ni))
         ! --middle loop-------------------------------------
             DO
@@ -299,13 +301,15 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
                      END IF
                   END IF
                END DO
-               d = sum (r) / nobs
-               IF (d /= 0.0D0) THEN
-                  b (0) = b (0) + d
-                  r = r - d
-                  dif = Max (dif, d**2)
-               END IF
                IF (ni > pmax) EXIT
+               IF (intr == 1) THEN
+                  d = sum (r) / nobs
+                  IF (d /= 0.0D0) THEN
+                     b (0) = b (0) + d
+                     r = r - d
+                     dif = Max (dif, d**2)
+                  END IF
+               END IF
                IF (dif < eps) EXIT
                IF(npass > maxit) THEN
                    jerr=-l
@@ -333,11 +337,13 @@ SUBROUTINE lslassoNETpath (lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfmax, &
                         r = r - x (:, k) * d
                      END IF
                   END DO
-                  d = sum (r) / nobs
-                  IF (d /= 0.0D0) THEN
-                     b (0) = b (0) + d
-                     r = r - d
-                     dif = Max (dif, d**2)
+                  IF (intr == 1) THEN
+                     d = sum (r) / nobs
+                     IF (d /= 0.0D0) THEN
+                        b (0) = b (0) + d
+                        r = r - d
+                        dif = Max (dif, d**2)
+                     END IF
                   END IF
                   IF (dif < eps) EXIT
                   IF(npass > maxit) THEN

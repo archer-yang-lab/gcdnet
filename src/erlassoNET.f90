@@ -186,8 +186,8 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
 ! --------------------------------------------------
       IMPLICIT NONE
         ! - - - arg types - - -
-      DOUBLE PRECISION, PARAMETER :: big = 9.9E30
-      DOUBLE PRECISION, PARAMETER :: mfl = 1.0E-6
+      DOUBLE PRECISION, PARAMETER :: big = 9.9D30
+      DOUBLE PRECISION, PARAMETER :: mfl = 1.0D-6
       INTEGER, PARAMETER :: mnlam = 6
       INTEGER :: mnl
       INTEGER :: nobs
@@ -256,7 +256,7 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
       npass = 0
       ni = npass
       mnl = Min (mnlam, nlam)
-      bigm = 2.0D0 * Max((1 - omega), omega)
+      bigm = 2.0D0 * Max((1.0D0 - omega), omega)
       maj = bigm * maj
       IF (flmin < 1.0D0) THEN
          flmin = Max (mfl, flmin)
@@ -276,7 +276,7 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                al = 0.0D0
                DO i = 1, nobs
                    IF (r(i) <= 0.0D0) THEN
-                       dl (i) = 2.0D0 * (1 - omega) * r(i)
+                       dl (i) = 2.0D0 * (1.0D0 - omega) * r(i)
                    ELSE
                        dl (i) = 2.0D0 * omega * r(i)
                    END IF
@@ -306,7 +306,7 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
 					 u = 0.0D0
                      DO i = 1, nobs
                      IF (r(i) <= 0.0D0) THEN
-                         dl (i) = 2.0D0 * (1 - omega) * r(i)
+                         dl (i) = 2.0D0 * (1.0D0 - omega) * r(i)
                      ELSE
                          dl (i) = 2.0D0 * omega * r(i)
                      END IF
@@ -335,7 +335,7 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                END DO
                DO i = 1, nobs
                    IF (r(i) <= 0.0D0) THEN
-                       dl (i) = 2.0D0 * (1 - omega) * r(i)
+                       dl (i) = 2.0D0 * (1.0D0 - omega) * r(i)
                    ELSE
                        dl (i) = 2.0D0 * omega * r(i)
                    END IF
@@ -362,7 +362,7 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
 					 u = 0.0D0
                      DO i = 1, nobs
                      IF (r(i) <= 0.0D0) THEN
-                         dl (i) = 2.0D0 * (1 - omega) * r(i)
+                         dl (i) = 2.0D0 * (1.0D0 - omega) * r(i)
                      ELSE
                          dl (i) = 2.0D0 * omega * r(i)
                      END IF
@@ -384,7 +384,7 @@ SUBROUTINE erlassoNETpath (omega, lam2, maj, nobs, nvars, x, y, ju, pf, pf2, dfm
                   END DO      
                   DO i = 1, nobs
                       IF (r(i) <= 0.0D0) THEN
-                          dl (i) = 2.0D0 * (1 - omega) * r(i)
+                          dl (i) = 2.0D0 * (1.0D0 - omega) * r(i)
                       ELSE
                           dl (i) = 2.0D0 * omega * r(i)
                       END IF
