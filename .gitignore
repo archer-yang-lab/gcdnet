@@ -1,0 +1,57 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+
+# LaTex related files #
+######################
+*.log
+*.aux
+*.pdf
+*.synctex.gz
+*.bbl
+*.blg
+*.xml
+*.sty
+*blx.bib
+*.bst
+*.cls
+*.thm
+*.toc
+*.nav
+*.out
+*.snm
+
+# Lyx related files #
+########################
+*.lyx
+*.lyx~
+
+# TextEdit related files #
+########################
+*.rtf
+
+# Rstudio related files #
+########################
+*.Rhistory
+*.Rapp.history
+*.tar.gz
+*.Rproj
+*.RData
+.Rproj.user
