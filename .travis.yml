@@ -1,0 +1,15 @@
+language: r
+r:
+  - release
+  - devel
+sudo: false
+cache: packages
+
+r_packages:
+  - knitr
+  - devtools
+  - methods
+  - Matrix
+notifications:
+  email:
+    - yi.yang6@mcgill.ca

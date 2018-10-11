@@ -25,7 +25,7 @@ chosen for \code{lambda}.
 to the \code{\link{predict}} method for \code{\link{gcdnet}} objects.}
 
 \author{Yi Yang, Yuwen Gu and Hui Zou\cr
-Maintainer: Yi Yang  <yiyang@umn.edu>}
+Maintainer: Yi Yang  <yi.yang6@mcgill.ca>}
 \references{
 Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for Computing The HHSVM and Its Generalizations," \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
 BugReport: \url{https://github.com/emeryyi/fastcox.git}\cr
