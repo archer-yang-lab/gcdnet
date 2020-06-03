@@ -2,7 +2,7 @@ Package: gcdnet
 Title: LASSO and elastic net (adaptive) penalized least squares, logistic
     regression, HHSVM, squared hinge SVM and expectile regression using a
     fast GCD algorithm.
-Version: 1.0.5
+Version: 1.0.6
 Author: Yi Yang <yi.yang6@mcgill.ca>, Yuwen Gu <yuwen.gu@uconn.edu>, Hui Zou
     <hzou@stat.umn.edu>
 Maintainer: Yi Yang <yi.yang6@mcgill.ca>
