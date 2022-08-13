@@ -1,5 +1,11 @@
 CHANGELOG - Record of Changes for gcdnet
-Please find below the list of the various changes and improvements that were part of each successive update.
+
+Please find below the list of the various changes and improvements that
+were part of each successive update.
+
+1.0.6:
+* [added] Support for intercept flag.
+* [added] Documentation via Roxygen2.
 
 1.0.5:
 * [added] Now the expectile regression model is supported.
@@ -12,11 +18,12 @@ Please find below the list of the various changes and improvements that were par
 
 1.0.3:
 * [added] Now gcdnet supports the elastic net penalized least squares.
-* [added] FAQ section for the main function "gcdnet" in the package documentation.
+* [added] FAQ section for the main function "gcdnet" in the package
+	  documentation.
 
 1.0.2:
-* [added] Now separate L2 penalty weights can be applied to each coefficient to allow
-differential L2 shrinkage.
+* [added] Now separate L2 penalty weights can be applied to each coefficient to
+          allow differential L2 shrinkage.
 
 1.0.1:
 * [fixed] Intercept update formula in the Fortran implementation for "sqsvm".
@@ -30,11 +37,10 @@ differential L2 shrinkage.
 
 Thanks to
 
-Charles Geyer for many suggestions.
+Charles Geyer for many suggestions;
 
-Teng Zhang for helping us get gcdnet into CRAN.
+Teng Zhang for helping us get gcdnet into CRAN;
 
-Patrick Zimmerman for suggesting improvements and finding bugs.
+Patrick Zimmerman for suggesting improvements and finding bugs; and
 
 Qing Mai for finding bugs.
-

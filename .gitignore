@@ -1,3 +1,12 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
 # OS generated files #
 ######################
 .DS_Store
@@ -9,18 +18,8 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
-# Compiled source #
-###################
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
-
-
 # LaTex related files #
-######################
+#######################
 *.log
 *.aux
 *.pdf
@@ -39,16 +38,16 @@ Thumbs.db
 *.snm
 
 # Lyx related files #
-########################
+#####################
 *.lyx
 *.lyx~
 
 # TextEdit related files #
-########################
+##########################
 *.rtf
 
 # Rstudio related files #
-########################
+#########################
 *.Rhistory
 *.Rapp.history
 *.tar.gz

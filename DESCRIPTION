@@ -1,13 +1,23 @@
 Package: gcdnet
-Title:  LASSO and Elastic Net (Adaptive) Penalized Least Squares, Logistic Regression, HHSVM, Squared Hinge SVM and Expectile Regression using a Fast GCD Algorithm
-Version: 1.0.5
-Date: 2017-11-19
-Author: Yi Yang <yi.yang6@mcgill.ca>, Hui Zou <hzou@stat.umn.edu>
+Title: The (adaptive) LASSO and elastic net penalized least squares, logistic
+    regression, hybrid Huberized support vector machines (HHSVM), squared hinge
+    loss support vector machines (SQSVM) and expectile regression using a
+    fast generalized coordinate descent (GCD) algorithm.
+Version: 1.0.6
+Author: Yi Yang <yi.yang6@mcgill.ca>, Yuwen Gu <yuwen.gu@uconn.edu>, Hui Zou
+    <hzou@stat.umn.edu>
 Maintainer: Yi Yang <yi.yang6@mcgill.ca>
-Depends: Matrix, methods
-Description: A generalized coordinate descent (GCD) algorithm for computing the solution path of the hybrid Huberized support vector machine (HHSVM) and its generalization, including the LASSO and elastic net (adaptive) penalized least squares, logistic regression, HHSVM, squared hinge loss SVM and expectile regression.
+Depends:
+    Matrix
+Description: This package implements a generalized coordinate descent (GCD)
+    algorithm for computing the solution path of the hybrid Huberized support
+    vector machine (HHSVM) and its generalization, including the LASSO and
+    elastic net (adaptive) penalized least squares, logistic regression,
+    HHSVM, squared hinge loss SVM and expectile regression.
 License: GPL-2
+Encoding: UTF-8
 URL: https://github.com/emeryyi/gcdnet
-Packaged: 2017-11-19 06:53:12 UTC; yiyang
 Repository: CRAN
-Date/Publication: 2017-11-19 08:00:50
+Date/Publication: 2011-10-14 08:00:50
+RoxygenNote: 7.2.0
+Suggests: testthat
