@@ -293,10 +293,14 @@ plot(m5)
 
 }
 \references{
-Yang, Y. and Zou, H. (2012),
-  "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+Yang, Y. and Zou, H. (2012).
+  "An Efficient Algorithm for Computing The HHSVM and Its Generalizations."
   \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
   BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
+
+  Gu, Y., and Zou, H. (2016).
+  "High-dimensional generalizations of asymmetric least squares regression and their applications."
+  \emph{The Annals of Statistics}, 44(6), 2661–2694.\cr
 }
 \seealso{
 \code{plot.gcdnet}

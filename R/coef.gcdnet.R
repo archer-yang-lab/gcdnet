@@ -1,4 +1,4 @@
-##' Get coefficients or make coefficient predictions from an "gcdnet" object.
+##' Get coefficients or make coefficient predictions from a "gcdnet" object.
 ##'
 ##' Computes the coefficients or returns a list of the indices of the nonzero
 ##' coefficients at the requested values for \code{lambda} from a fitted
@@ -30,13 +30,17 @@
 ##'
 ##' @seealso \code{\link{predict.gcdnet}} method
 ##'
-##' @references Yang, Y. and Zou, H. (2012),
-##'   "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+##' @references Yang, Y. and Zou, H. (2012).
+##'   "An Efficient Algorithm for Computing The HHSVM and Its Generalizations."
 ##'   \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
 ##'   BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
 ##'
-##'   Friedman, J., Hastie, T., and Tibshirani, R. (2010),
-##'   "Regularization paths for generalized linear models via coordinate descent,"
+##'   Gu, Y., and Zou, H. (2016).
+##'   "High-dimensional generalizations of asymmetric least squares regression and their applications."
+##'   \emph{The Annals of Statistics}, 44(6), 2661–2694.\cr
+##'
+##'   Friedman, J., Hastie, T., and Tibshirani, R. (2010).
+##'   "Regularization paths for generalized linear models via coordinate descent."
 ##'   \emph{Journal of Statistical Software, 33, 1.}\cr
 ##'   \url{https://www.jstatsoft.org/v33/i01/}
 ##'
@@ -53,3 +57,22 @@
 coef.gcdnet <- function(object, s = NULL,
                         type = c("coefficients", "nonzero"),
                         ...) NextMethod("coef")
+
+##' Extract Model Coefficients
+##'
+##' \code{coef} is a generic function which extracts model coefficients from
+##' objects returned by modeling functions. \code{coefficients} is an
+##' \emph{alias} for it.
+##'
+##' @param object an object for which the extraction of model coefficients is
+##'   meaningful.
+##' @param \ldots other arguments.
+##'
+##' @return Coefficients extracted from the model object \code{object}.
+##'
+##' @seealso \code{\link{coef.gcdnet}}, \code{\link{coef.erpath}},
+##'   \code{\link{coef.lspath}}, \code{\link{coef.hsvmpath}},
+##'   \code{\link{coef.logitpath}}, \code{\link{coef.sqsvmpath}}.
+##'
+##' @export
+coef <- function(object, ...) UseMethod("coef")

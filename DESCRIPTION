@@ -14,11 +14,11 @@ Imports:
     methods,
     Matrix
 Description: Implements a generalized coordinate descent (GCD) algorithm
-    for computing the solution path of the hybrid Huberized support vector
-    machine (HHSVM) and its generalization, including the LASSO and elastic
-    net (adaptive) penalized least squares, logistic regression, HHSVM,
-    squared hinge loss SVM and expectile regression.
-License: GPL-2
+    for computing the solution paths of the hybrid Huberized support vector
+    machine (HHSVM) and its generalizations. Supported models include the
+    (adaptive) LASSO and elastic net penalized least squares, logistic
+    regression, HHSVM, squared hinge loss SVM and expectile regression.
+License: GPL (>= 2)
 Encoding: UTF-8
 URL: https://github.com/emeryyi/gcdnet
 Repository: CRAN

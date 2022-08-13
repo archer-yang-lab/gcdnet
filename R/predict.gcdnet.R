@@ -1,4 +1,4 @@
-##' Make predictions from a "gcdnet" object.
+##' Make predictions from a "gcdnet" object
 ##'
 ##' Similar to other predict methods, this functions predicts fitted values and
 ##' class labels from a fitted \code{\link{gcdnet}} object.
@@ -30,13 +30,17 @@
 ##'
 ##' Maintainer: Yi Yang <yi.yang6@mcgill.ca>
 ##' @seealso \code{\link{coef}} method
-##' @references Yang, Y. and Zou, H. (2012),
-##'   "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+##' @references Yang, Y. and Zou, H. (2012).
+##'   "An Efficient Algorithm for Computing The HHSVM and Its Generalizations."
 ##'   \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
 ##'   BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
 ##'
-##'   Friedman, J., Hastie, T., and Tibshirani, R. (2010),
-##'   "Regularization paths for generalized linear models via coordinate descent,"
+##'   Gu, Y., and Zou, H. (2016).
+##'   "High-dimensional generalizations of asymmetric least squares regression and their applications."
+##'   \emph{The Annals of Statistics}, 44(6), 2661–2694.\cr
+##'
+##'   Friedman, J., Hastie, T., and Tibshirani, R. (2010).
+##'   "Regularization paths for generalized linear models via coordinate descent."
 ##'   \emph{Journal of Statistical Software, 33, 1.}\cr
 ##'   \url{https://www.jstatsoft.org/v33/i01/}
 ##' @keywords models regression
@@ -49,3 +53,24 @@
 ##' @export
 predict.gcdnet <- function(object, newx, s = NULL, type = c("class", "link"),
                            ...) NextMethod("predict")
+
+##' Model predictions
+##'
+##' \code{predict} is a generic function for predictions from the results of
+##' various model fitting functions. The function invokes particular
+##' \emph{methods} which depend on the \code{\link{class}} of the first
+##' argument.
+##'
+##' @param object a model object for which prediction is desired.
+##' @param \dots additional arguments affecting the predictions produced.
+##'
+##' @return The form of the value returned by \code{predict} depends on the
+##'   class of its argument. See the documentation of the particular methods for
+##'   details of what is produced by that method.
+##'
+##' @seealso \code{\link{predict.gcdnet}}, \code{\link{predict.erpath}},
+##'   \code{\link{predict.lspath}}, \code{\link{predict.hsvmpath}},
+##'   \code{\link{predict.logitpath}}, \code{\link{predict.sqsvmpath}}.
+##'
+##' @export
+predict <- function(object,...) UseMethod("predict")

@@ -7,7 +7,7 @@
 \alias{coef.logitpath}
 \alias{coef.lspath}
 \alias{coef.erpath}
-\title{Get coefficients or make coefficient predictions from an "gcdnet" object.}
+\title{Get coefficients or make coefficient predictions from a "gcdnet" object.}
 \usage{
 \method{coef}{gcdnet}(object, s = NULL, type = c("coefficients", "nonzero"), ...)
 }
@@ -49,13 +49,17 @@ coef(fit1, type = "nonzero")
 
 }
 \references{
-Yang, Y. and Zou, H. (2012),
-  "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+Yang, Y. and Zou, H. (2012).
+  "An Efficient Algorithm for Computing The HHSVM and Its Generalizations."
   \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
   BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
 
-  Friedman, J., Hastie, T., and Tibshirani, R. (2010),
-  "Regularization paths for generalized linear models via coordinate descent,"
+  Gu, Y., and Zou, H. (2016).
+  "High-dimensional generalizations of asymmetric least squares regression and their applications."
+  \emph{The Annals of Statistics}, 44(6), 2661–2694.\cr
+
+  Friedman, J., Hastie, T., and Tibshirani, R. (2010).
+  "Regularization paths for generalized linear models via coordinate descent."
   \emph{Journal of Statistical Software, 33, 1.}\cr
   \url{https://www.jstatsoft.org/v33/i01/}
 }

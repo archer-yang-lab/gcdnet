@@ -7,7 +7,7 @@
 \alias{predict.logitpath}
 \alias{predict.lspath}
 \alias{predict.erpath}
-\title{Make predictions from a "gcdnet" object.}
+\title{Make predictions from a "gcdnet" object}
 \usage{
 \method{predict}{gcdnet}(object, newx, s = NULL, type = c("class", "link"), ...)
 }
@@ -52,13 +52,17 @@ print(predict(m1, type = "class",newx = FHT$x[2:5, ]))
 
 }
 \references{
-Yang, Y. and Zou, H. (2012),
-  "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+Yang, Y. and Zou, H. (2012).
+  "An Efficient Algorithm for Computing The HHSVM and Its Generalizations."
   \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
   BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
 
-  Friedman, J., Hastie, T., and Tibshirani, R. (2010),
-  "Regularization paths for generalized linear models via coordinate descent,"
+  Gu, Y., and Zou, H. (2016).
+  "High-dimensional generalizations of asymmetric least squares regression and their applications."
+  \emph{The Annals of Statistics}, 44(6), 2661–2694.\cr
+
+  Friedman, J., Hastie, T., and Tibshirani, R. (2010).
+  "Regularization paths for generalized linear models via coordinate descent."
   \emph{Journal of Statistical Software, 33, 1.}\cr
   \url{https://www.jstatsoft.org/v33/i01/}
 }

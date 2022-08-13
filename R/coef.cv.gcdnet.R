@@ -28,13 +28,17 @@
 ##' @seealso \code{\link{cv.gcdnet}}, and \code{\link{predict.cv.gcdnet}}
 ##'   methods.
 ##'
-##' @references Yang, Y. and Zou, H. (2012),
-##'   "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+##' @references Yang, Y. and Zou, H. (2012).
+##'   "An Efficient Algorithm for Computing The HHSVM and Its Generalizations."
 ##'   \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
 ##'   BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
 ##'
-##'   Friedman, J., Hastie, T., and Tibshirani, R. (2010),
-##'   "Regularization paths for generalized linear models via coordinate descent,"
+##'   Gu, Y., and Zou, H. (2016).
+##'   "High-dimensional generalizations of asymmetric least squares regression and their applications."
+##'   \emph{The Annals of Statistics}, 44(6), 2661–2694.\cr
+##'
+##'   Friedman, J., Hastie, T., and Tibshirani, R. (2010).
+##'   "Regularization paths for generalized linear models via coordinate descent."
 ##'   \emph{Journal of Statistical Software, 33, 1.}\cr
 ##'   \url{https://www.jstatsoft.org/v33/i01/}
 ##'
