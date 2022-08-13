@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.cv.gcdnet.R
 \name{plot.cv.gcdnet}
 \alias{plot.cv.gcdnet}
-\title{plot the cross-validation curve produced by cv.gcdnet}
+\title{Plot the cross-validation curve produced by cv.gcdnet}
 \usage{
 \method{plot}{cv.gcdnet}(x, sign.lambda = 1, ...)
 }
@@ -25,34 +25,34 @@ A plot is produced.
 }
 \examples{
 
-# fit an elastic net penalized logistic regression
-# with lambda2 = 1 for the L2 penalty. Use the
-# logistic loss as the cross validation
-# prediction loss. Use five-fold CV to choose
-# the optimal lambda for the L1 penalty.
+# fit an elastic net penalized logistic regression with lambda2 = 1 for the
+# L2 penalty. Use the logistic loss as the cross validation prediction loss.
+# Use five-fold CV to choose the optimal lambda for the L1 penalty.
 data(FHT)
 set.seed(2011)
-cv=cv.gcdnet(FHT$x, FHT$y, method ="logit",
-lambda2 = 1, pred.loss="loss", nfolds=5)
+cv=cv.gcdnet(FHT$x, FHT$y, method ="logit", lambda2 = 1,
+             pred.loss="loss", nfolds=5)
 plot(cv)
 
 }
 \references{
-Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for
-Computing The HHSVM and Its Generalizations," \emph{Journal of
-Computational and Graphical Statistics}, 22, 396-415.\cr BugReport:
-\url{https://github.com/emeryyi/fastcox.git}\cr
+Yang, Y. and Zou, H. (2012),
+  "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+  \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
+  BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
 
-Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths
-for generalized linear models via coordinate descent," \emph{Journal of
-Statistical Software, 33, 1.}\cr \url{http://www.jstatsoft.org/v33/i01/}
+  Friedman, J., Hastie, T., and Tibshirani, R. (2010),
+  "Regularization paths for generalized linear models via coordinate descent,"
+  \emph{Journal of Statistical Software, 33, 1.}\cr
+  \url{http://www.jstatsoft.org/v33/i01/}
 }
 \seealso{
 \code{\link{cv.gcdnet}}.
 }
 \author{
-Yi Yang, Yuwen Gu and Hui Zou\cr Maintainer: Yi Yang
-<yi.yang6@mcgill.ca>
+Yi Yang, Yuwen Gu and Hui Zou\cr
+
+Maintainer: Yi Yang <yi.yang6@mcgill.ca>
 }
 \keyword{models}
 \keyword{regression}

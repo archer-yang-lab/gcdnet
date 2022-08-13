@@ -1,14 +1,11 @@
 ######################################################################
-## This function is adapted/modified based on the plot
-#   function from
-## the glmnet package:
-## Jerome Friedman, Trevor Hastie, Robert Tibshirani
-#   (2010).
-## Regularization Paths for Generalized Linear Models via
-#   Coordinate Descent.
-##        Journal of Statistical Software, 33(1), 1-22.
-##        URL http://www.jstatsoft.org/v33/i01/.
-
+## This function is adapted/modified based on the plot function
+## from the `glmnet` package:
+##
+## Jerome Friedman, Trevor Hastie, Robert Tibshirani (2010).
+## Regularization Paths for Generalized Linear Models via Coordinate Descent.
+##   Journal of Statistical Software, 33(1), 1-22.
+##   URL: http://www.jstatsoft.org/v33/i01/.
 
 ##' Plot coefficients from a "gcdnet" object
 ##'
@@ -20,22 +17,23 @@
 ##'
 ##' @param x fitted \code{\link{gcdnet}} model
 ##' @param xvar what is on the X-axis. \code{"norm"} plots against the L1-norm
-##' of the coefficients, \code{"lambda"} against the log-lambda sequence.
+##'   of the coefficients, \code{"lambda"} against the log-lambda sequence.
 ##' @param color if \code{TRUE}, plot the curves with rainbow colors.
-##' \code{FALSE} is gray colors. Default is \code{FALSE}
+##'   \code{FALSE} is gray colors. Default is \code{FALSE}
 ##' @param label if \code{TRUE}, label the curves with variable sequence
-##' numbers. Default is \code{FALSE}
+##'   numbers. Default is \code{FALSE}
 ##' @param \dots other graphical parameters to plot
 ##' @author Yi Yang, Yuwen Gu and Hui Zou\cr Maintainer: Yi Yang
-##' <yi.yang6@mcgill.ca>
-##' @references Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for
-##' Computing The HHSVM and Its Generalizations," \emph{Journal of
-##' Computational and Graphical Statistics}, 22, 396-415.\cr BugReport:
-##' \url{https://github.com/emeryyi/fastcox.git}\cr
+##'   <yi.yang6@mcgill.ca>
+##' @references Yang, Y. and Zou, H. (2012),
+##'   "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+##'   \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
+##'   BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
 ##'
-##' Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths
-##' for generalized linear models via coordinate descent," \emph{Journal of
-##' Statistical Software, 33, 1.}\cr \url{http://www.jstatsoft.org/v33/i01/}
+##'   Friedman, J., Hastie, T., and Tibshirani, R. (2010),
+##'   "Regularization paths for generalized linear models via coordinate descent,"
+##'   \emph{Journal of Statistical Software, 33, 1.}\cr
+##'   \url{http://www.jstatsoft.org/v33/i01/}
 ##' @keywords models regression
 ##' @examples
 ##'
@@ -50,8 +48,8 @@
 ##' @importFrom grDevices gray.colors
 ##' @importFrom stats approx
 ##' @export
-plot.gcdnet <- function(x, xvar = c("norm", "lambda"),
-                        color = FALSE, label = FALSE, ...) {
+plot.gcdnet <- function(x, xvar = c("norm", "lambda"), color = FALSE,
+                        label = FALSE, ...) {
   beta <- x$beta
   lambda <- x$lambda
   df <- x$df

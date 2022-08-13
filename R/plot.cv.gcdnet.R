@@ -1,20 +1,13 @@
-######################################################################
-## This function is adapted/modified based on the plot.cv
-#   function from
-## the glmnet package:
-## Jerome Friedman, Trevor Hastie, Robert Tibshirani
-#   (2010).
-## Regularization Paths for Generalized Linear Models via
-#   Coordinate Descent.
-##        Journal of Statistical Software, 33(1), 1-22.
-##        URL http://www.jstatsoft.org/v33/i01/.
+########################################################################
+## This function is adapted/modified based on the plot.cv function
+## from the `glmnet` package:
+##
+## Jerome Friedman, Trevor Hastie, Robert Tibshirani (2010).
+## Regularization Paths for Generalized Linear Models via Coordinate Descent.
+##   Journal of Statistical Software, 33(1), 1-22.
+##   URL: http://www.jstatsoft.org/v33/i01/.
 
-
-
-
-
-
-##' plot the cross-validation curve produced by cv.gcdnet
+##' Plot the cross-validation curve produced by cv.gcdnet
 ##'
 ##' Plots the cross-validation curve, and upper and lower standard deviation
 ##' curves, as a function of the \code{lambda} values used. This function is
@@ -25,31 +18,31 @@
 ##'
 ##' @param x fitted \code{\link{cv.gcdnet}} object
 ##' @param sign.lambda either plot against \code{log(lambda)} (default) or its
-##' negative if \code{sign.lambda=-1}.
+##'   negative if \code{sign.lambda=-1}.
 ##' @param \dots other graphical parameters to plot
-##' @author Yi Yang, Yuwen Gu and Hui Zou\cr Maintainer: Yi Yang
-##' <yi.yang6@mcgill.ca>
-##' @seealso \code{\link{cv.gcdnet}}.
-##' @references Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for
-##' Computing The HHSVM and Its Generalizations," \emph{Journal of
-##' Computational and Graphical Statistics}, 22, 396-415.\cr BugReport:
-##' \url{https://github.com/emeryyi/fastcox.git}\cr
+##' @author Yi Yang, Yuwen Gu and Hui Zou\cr
 ##'
-##' Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths
-##' for generalized linear models via coordinate descent," \emph{Journal of
-##' Statistical Software, 33, 1.}\cr \url{http://www.jstatsoft.org/v33/i01/}
+##' Maintainer: Yi Yang <yi.yang6@mcgill.ca>
+##' @seealso \code{\link{cv.gcdnet}}.
+##' @references Yang, Y. and Zou, H. (2012),
+##'   "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+##'   \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
+##'   BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
+##'
+##'   Friedman, J., Hastie, T., and Tibshirani, R. (2010),
+##'   "Regularization paths for generalized linear models via coordinate descent,"
+##'   \emph{Journal of Statistical Software, 33, 1.}\cr
+##'   \url{http://www.jstatsoft.org/v33/i01/}
 ##' @keywords models regression
 ##' @examples
 ##'
-##' # fit an elastic net penalized logistic regression
-##' # with lambda2 = 1 for the L2 penalty. Use the
-##' # logistic loss as the cross validation
-##' # prediction loss. Use five-fold CV to choose
-##' # the optimal lambda for the L1 penalty.
+##' # fit an elastic net penalized logistic regression with lambda2 = 1 for the
+##' # L2 penalty. Use the logistic loss as the cross validation prediction loss.
+##' # Use five-fold CV to choose the optimal lambda for the L1 penalty.
 ##' data(FHT)
 ##' set.seed(2011)
-##' cv=cv.gcdnet(FHT$x, FHT$y, method ="logit",
-##' lambda2 = 1, pred.loss="loss", nfolds=5)
+##' cv=cv.gcdnet(FHT$x, FHT$y, method ="logit", lambda2 = 1,
+##'              pred.loss="loss", nfolds=5)
 ##' plot(cv)
 ##'
 ##' @importFrom graphics points abline

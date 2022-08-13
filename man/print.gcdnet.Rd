@@ -4,7 +4,7 @@
 \alias{print.gcdnet}
 \title{Print a gcdnet object}
 \usage{
-\method{print}{gcdnet}(x, digits = max(3, getOption("digits") - 3), ...)
+print.gcdnet(x, digits = max(3, getOption("digits") - 3), ...)
 }
 \arguments{
 \item{x}{fitted \code{\link{gcdnet}} object}
@@ -15,7 +15,7 @@
 }
 \value{
 a two-column matrix, the first columns is the number of nonzero
-coefficients and the second column is \code{Lambda}.
+  coefficients and the second column is \code{Lambda}.
 }
 \description{
 Print a summary of the gcdnet path at each step along the path.
@@ -33,18 +33,20 @@ print(m1)
 
 }
 \references{
-Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for
-Computing The HHSVM and Its Generalizations," \emph{Journal of
-Computational and Graphical Statistics}, 22, 396-415.\cr BugReport:
-\url{https://github.com/emeryyi/fastcox.git}\cr
+Yang, Y. and Zou, H. (2012),
+  "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+  \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
+  BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
 
-Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths
-for generalized linear models via coordinate descent," \emph{Journal of
-Statistical Software, 33, 1.}\cr \url{http://www.jstatsoft.org/v33/i01/}
+  Friedman, J., Hastie, T., and Tibshirani, R. (2010),
+  "Regularization paths for generalized linear models via coordinate descent,"
+  \emph{Journal of Statistical Software, 33, 1.}\cr
+  \url{http://www.jstatsoft.org/v33/i01/}
 }
 \author{
-Yi Yang, Yuwen Gu and Hui Zou\cr Maintainer: Yi Yang
-<yi.yang6@mcgill.ca>
+Yi Yang, Yuwen Gu and Hui Zou\cr
+
+Maintainer: Yi Yang <yi.yang6@mcgill.ca>
 }
 \keyword{models}
 \keyword{regression}

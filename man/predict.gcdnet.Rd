@@ -9,25 +9,24 @@
 \alias{predict.erpath}
 \title{Make predictions from a "gcdnet" object.}
 \usage{
-\method{predict}{gcdnet}(object, newx, s = NULL, type = c("class",
-  "link"), ...)
+\method{predict}{gcdnet}(object, newx, s = NULL, type = c("class", "link"), ...)
 }
 \arguments{
 \item{object}{fitted \code{\link{gcdnet}} model object.}
 
-\item{newx}{matrix of new values for \code{x} at which predictions are to
-be made. NOTE: \code{newx} must be a matrix, \code{predict} function does
-not accept a vector or other formats of \code{newx}.}
+\item{newx}{matrix of new values for \code{x} at which predictions are to be
+made. NOTE: \code{newx} must be a matrix, \code{predict} function does not
+accept a vector or other formats of \code{newx}.}
 
 \item{s}{value(s) of the penalty parameter \code{lambda} at which
-predictions are required. Default is the entire sequence used to create the
-model.}
+predictions are required. Default is the entire sequence used to create
+the model.}
 
-\item{type}{type of prediction required.  \itemize{ \item Type
-\code{"link"} gives the linear predictors for classification problems and
-gives predicted response for regression problems.  \item Type
-\code{"class"} produces the class label corresponding to the maximum
-probability. Only available for classification problems.}}
+\item{type}{type of prediction required. \itemize{ \item Type \code{"link"}
+gives the linear predictors for classification problems and gives
+predicted response for regression problems. \item Type \code{"class"}
+produces the class label corresponding to the maximum probability. Only
+available for classification problems.}}
 
 \item{\dots}{Not used. Other arguments to predict.}
 }
@@ -53,21 +52,23 @@ print(predict(m1, type = "class",newx = FHT$x[2:5, ]))
 
 }
 \references{
-Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for
-Computing The HHSVM and Its Generalizations," \emph{Journal of
-Computational and Graphical Statistics}, 22, 396-415.\cr BugReport:
-\url{https://github.com/emeryyi/fastcox.git}\cr
+Yang, Y. and Zou, H. (2012),
+  "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+  \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
+  BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
 
-Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths
-for generalized linear models via coordinate descent," \emph{Journal of
-Statistical Software, 33, 1.}\cr \url{http://www.jstatsoft.org/v33/i01/}
+  Friedman, J., Hastie, T., and Tibshirani, R. (2010),
+  "Regularization paths for generalized linear models via coordinate descent,"
+  \emph{Journal of Statistical Software, 33, 1.}\cr
+  \url{http://www.jstatsoft.org/v33/i01/}
 }
 \seealso{
 \code{\link{coef}} method
 }
 \author{
-Yi Yang, Yuwen Gu and Hui Zou\cr Maintainer: Yi Yang
-<yi.yang6@mcgill.ca>
+Yi Yang, Yuwen Gu and Hui Zou\cr
+
+Maintainer: Yi Yang <yi.yang6@mcgill.ca>
 }
 \keyword{models}
 \keyword{regression}

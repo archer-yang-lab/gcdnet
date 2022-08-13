@@ -1,6 +1,5 @@
 ##' @export
-cv.erpath <- function(outlist, lambda, x, y, foldid,
-                      pred.loss, delta, omega) {
+cv.erpath <- function(outlist, lambda, x, y, foldid, pred.loss, delta, omega) {
   typenames <- c(misclass = "Misclassification Error", loss = "Expectile Loss")
   if (pred.loss == "default")
     pred.loss <- "loss"

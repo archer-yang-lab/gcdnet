@@ -1,6 +1,5 @@
 ##' @export
-cv.lspath <- function(outlist, lambda, x, y, foldid,
-                      pred.loss, delta, omega) {
+cv.lspath <- function(outlist, lambda, x, y, foldid, pred.loss, delta, omega) {
   typenames <- c(misclass = "Misclassification Error",
                  loss = "Least Square Loss")
   if (pred.loss == "default")

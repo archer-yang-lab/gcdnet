@@ -4,8 +4,7 @@
 \alias{plot.gcdnet}
 \title{Plot coefficients from a "gcdnet" object}
 \usage{
-\method{plot}{gcdnet}(x, xvar = c("norm", "lambda"), color = FALSE,
-  label = FALSE, ...)
+\method{plot}{gcdnet}(x, xvar = c("norm", "lambda"), color = FALSE, label = FALSE, ...)
 }
 \arguments{
 \item{x}{fitted \code{\link{gcdnet}} model}
@@ -40,18 +39,19 @@ plot(m1,color = TRUE)
 
 }
 \references{
-Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for
-Computing The HHSVM and Its Generalizations," \emph{Journal of
-Computational and Graphical Statistics}, 22, 396-415.\cr BugReport:
-\url{https://github.com/emeryyi/fastcox.git}\cr
+Yang, Y. and Zou, H. (2012),
+  "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+  \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
+  BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
 
-Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths
-for generalized linear models via coordinate descent," \emph{Journal of
-Statistical Software, 33, 1.}\cr \url{http://www.jstatsoft.org/v33/i01/}
+  Friedman, J., Hastie, T., and Tibshirani, R. (2010),
+  "Regularization paths for generalized linear models via coordinate descent,"
+  \emph{Journal of Statistical Software, 33, 1.}\cr
+  \url{http://www.jstatsoft.org/v33/i01/}
 }
 \author{
 Yi Yang, Yuwen Gu and Hui Zou\cr Maintainer: Yi Yang
-<yi.yang6@mcgill.ca>
+  <yi.yang6@mcgill.ca>
 }
 \keyword{models}
 \keyword{regression}

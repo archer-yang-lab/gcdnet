@@ -4,11 +4,11 @@
 \name{FHT}
 \alias{FHT}
 \title{FHT data introduced in Friedman et al. (2010).}
-\format{This data frame contains the following columns: \describe{
-\item{x}{a matrix with 100 rows and 5000 columns} \item{y}{class labels}
-\item{y_reg}{response variable for regression}
-
-}}
+\format{
+This data frame contains the following columns: \describe{
+  \item{x}{a matrix with 100 rows and 5000 columns} \item{y}{class labels}
+  \item{y_reg}{response variable for regression} }
+}
 \description{
 The \code{FHT} data set has n = 50 observations and p = 100 predictors. The
 covariance between predictors Xj and Xj' has the same correlation 0.5. See
@@ -20,13 +20,14 @@ data(FHT)
 
 }
 \references{
-Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for
-Computing The HHSVM and Its Generalizations," \emph{Journal of
-Computational and Graphical Statistics}, 22, 396-415.\cr BugReport:
-\url{https://github.com/emeryyi/fastcox.git}\cr
+Yang, Y. and Zou, H. (2012),
+  "An Efficient Algorithm for Computing The HHSVM and Its Generalizations,"
+  \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
+  BugReport: \url{https://github.com/emeryyi/gcdnet}\cr
 
-Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths
-for generalized linear models via coordinate descent," \emph{Journal of
-Statistical Software, 33, 1.}\cr \url{http://www.jstatsoft.org/v33/i01/}
+  Friedman, J., Hastie, T., and Tibshirani, R. (2010),
+  "Regularization paths for generalized linear models via coordinate descent,"
+  \emph{Journal of Statistical Software, 33, 1.}\cr
+  \url{http://www.jstatsoft.org/v33/i01/}
 }
 \keyword{datasets}

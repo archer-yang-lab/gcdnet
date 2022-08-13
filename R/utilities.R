@@ -3,14 +3,15 @@
 #' @import Matrix
 #' @importFrom graphics segments
 #####################################################################
-## These functions are minor modifications or directly
-#   copies from the glmnet package:
+## These functions are minor modifications or direct copies
+## from the `glmnet` package:
+##
 ## Jerome Friedman, Trevor Hastie, Robert Tibshirani (2010).
 ## Regularization Paths for Generalized Linear Models via Coordinate Descent.
-##        Journal of Statistical Software, 33(1), 1-22.
-##        URL http://www.jstatsoft.org/v33/i01/.
-## The reason they are copied here is because they are
-#   internal functions
+##   Journal of Statistical Software, 33(1), 1-22.
+##   URL: http://www.jstatsoft.org/v33/i01/.
+##
+## The reason they are copied here is because they are internal functions
 ## and hence are not exported into the global environment.
 ## The original comments and header are preserved.
 

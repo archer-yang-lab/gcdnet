@@ -1,6 +1,5 @@
 ##' @export
-predict.lspath <- function(object, newx, s = NULL,
-                           type = c("link"), ...) {
+predict.lspath <- function(object, newx, s = NULL, type = c("link"), ...) {
   type <- match.arg(type)
   b0 <- t(as.matrix(object$b0))
   rownames(b0) <- "(Intercept)"

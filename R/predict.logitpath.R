@@ -1,6 +1,6 @@
 ##' @export
-predict.logitpath <- function(object, newx, s = NULL,
-                              type = c("class", "link"), ...) {
+predict.logitpath <- function(object, newx, s = NULL, type = c("class", "link"),
+                              ...) {
   type <- match.arg(type)
   b0 <- t(as.matrix(object$b0))
   rownames(b0) <- "(Intercept)"

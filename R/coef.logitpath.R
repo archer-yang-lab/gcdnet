@@ -1,6 +1,6 @@
 ##' @export
-coef.logitpath <- function(object, s = NULL, type = c("coefficients",
-                                                      "nonzero"), ...) {
+coef.logitpath <- function(object, s = NULL,
+                           type = c("coefficients", "nonzero"), ...) {
   type <- match.arg(type)
   b0 <- t(as.matrix(object$b0))
   rownames(b0) <- "(Intercept)"

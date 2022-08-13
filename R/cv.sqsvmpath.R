@@ -1,6 +1,5 @@
 ##' @export
-cv.sqsvmpath <- function(outlist, lambda, x, y, foldid,
-                         pred.loss, delta, omega) {
+cv.sqsvmpath <- function(outlist, lambda, x, y, foldid, pred.loss, delta, omega) {
   typenames <- c(misclass = "Misclassification Error",
                  loss = "Margin Based Loss")
   if (pred.loss == "default")
