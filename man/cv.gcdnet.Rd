@@ -80,23 +80,6 @@ get the \code{lambda} sequence, and then the remainder to compute the fit
 with each of the folds omitted. The average error and standard deviation
 over the folds are computed.
 }
-<<<<<<< HEAD
-
-\author{Yi Yang, Yuwen Gu and Hui Zou\cr
-Maintainer: Yi Yang  <yi.yang6@mcgill.ca>}
-\references{
-Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for Computing The HHSVM and Its Generalizations," \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
-BugReport: \url{https://github.com/emeryyi/fastcox.git}\cr
-
-
-Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized
-linear models via coordinate descent," \emph{Journal of Statistical Software, 33, 1.}\cr
-\url{http://www.jstatsoft.org/v33/i01/}}
-
-
-\seealso{\code{\link{gcdnet}}, \code{\link{plot.cv.gcdnet}}, \code{\link{predict.cv.gcdnet}}, and \code{\link{coef.cv.gcdnet}} methods.}
-=======
->>>>>>> dev
 \examples{
 
 # fit an elastic net penalized HHSVM with lambda2 = 0.1 for the L2 penalty.
@@ -144,7 +127,7 @@ Yang, Y. and Zou, H. (2012),
   Friedman, J., Hastie, T., and Tibshirani, R. (2010),
   "Regularization paths for generalized linear models via coordinate descent,"
   \emph{Journal of Statistical Software, 33, 1.}\cr
-  \url{http://www.jstatsoft.org/v33/i01/}
+  \url{https://www.jstatsoft.org/v33/i01/}
 }
 \seealso{
 \code{\link{gcdnet}}, \code{\link{plot.cv.gcdnet}},

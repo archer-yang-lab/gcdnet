@@ -133,18 +133,9 @@ An object with S3 class \code{\link{gcdnet}}. \item{call}{the call
   over all lambda values} \item{jerr}{error flag, for warnings and errors, 0
   if no error.}
 }
-<<<<<<< HEAD
-
-\author{Yi Yang, Yuwen Gu and Hui Zou\cr
-Maintainer: Yi Yang  <yi.yang6@mcgill.ca>}
-\references{
-Yang, Y. and Zou, H. (2012), "An Efficient Algorithm for Computing The HHSVM and Its Generalizations," \emph{Journal of Computational and Graphical Statistics}, 22, 396-415.\cr
-BugReport: \url{https://github.com/emeryyi/fastcox.git}\cr
-=======
 \description{
 Fits a regularization path for large margin classifiers at a sequence of
 regularization parameters lambda.
->>>>>>> dev
 }
 \details{
 Note that the objective function in \code{gcdnet} is \deqn{Loss(y,

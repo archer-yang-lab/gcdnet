@@ -258,7 +258,7 @@
 ##'
 ##' @export
 ##'
-##' @useDynLib gcdnet
+##' @useDynLib gcdnet, .registration = TRUE
 ##'
 gcdnet <- function(x, y, nlambda = 100,
                    method = c("hhsvm", "logit", "sqsvm", "ls", "er"),

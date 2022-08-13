@@ -38,7 +38,7 @@
 ##'   Friedman, J., Hastie, T., and Tibshirani, R. (2010),
 ##'   "Regularization paths for generalized linear models via coordinate descent,"
 ##'   \emph{Journal of Statistical Software, 33, 1.}\cr
-##'   \url{http://www.jstatsoft.org/v33/i01/}
+##'   \url{https://www.jstatsoft.org/v33/i01/}
 ##' @keywords models regression
 ##' @examples
 ##'

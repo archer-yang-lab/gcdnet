@@ -4,7 +4,7 @@
 \alias{print.gcdnet}
 \title{Print a gcdnet object}
 \usage{
-print.gcdnet(x, digits = max(3, getOption("digits") - 3), ...)
+\method{print}{gcdnet}(x, digits = max(3, getOption("digits") - 3), ...)
 }
 \arguments{
 \item{x}{fitted \code{\link{gcdnet}} object}
@@ -41,7 +41,7 @@ Yang, Y. and Zou, H. (2012),
   Friedman, J., Hastie, T., and Tibshirani, R. (2010),
   "Regularization paths for generalized linear models via coordinate descent,"
   \emph{Journal of Statistical Software, 33, 1.}\cr
-  \url{http://www.jstatsoft.org/v33/i01/}
+  \url{https://www.jstatsoft.org/v33/i01/}
 }
 \author{
 Yi Yang, Yuwen Gu and Hui Zou\cr

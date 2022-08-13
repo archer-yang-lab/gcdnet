@@ -5,7 +5,7 @@
 ## Jerome Friedman, Trevor Hastie, Robert Tibshirani (2010).
 ## Regularization Paths for Generalized Linear Models via Coordinate Descent.
 ##   Journal of Statistical Software, 33(1), 1-22.
-##   URL: http://www.jstatsoft.org/v33/i01/.
+##   URL: https://www.jstatsoft.org/v33/i01/.
 
 ##' Plot the cross-validation curve produced by cv.gcdnet
 ##'
@@ -32,7 +32,7 @@
 ##'   Friedman, J., Hastie, T., and Tibshirani, R. (2010),
 ##'   "Regularization paths for generalized linear models via coordinate descent,"
 ##'   \emph{Journal of Statistical Software, 33, 1.}\cr
-##'   \url{http://www.jstatsoft.org/v33/i01/}
+##'   \url{https://www.jstatsoft.org/v33/i01/}
 ##' @keywords models regression
 ##' @examples
 ##'

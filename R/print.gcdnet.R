@@ -22,7 +22,7 @@
 ##'   Friedman, J., Hastie, T., and Tibshirani, R. (2010),
 ##'   "Regularization paths for generalized linear models via coordinate descent,"
 ##'   \emph{Journal of Statistical Software, 33, 1.}\cr
-##'   \url{http://www.jstatsoft.org/v33/i01/}
+##'   \url{https://www.jstatsoft.org/v33/i01/}
 ##' @keywords models regression
 ##' @examples
 ##'
@@ -30,6 +30,7 @@
 ##' m1 <- gcdnet(x = FHT$x, y = FHT$y, delta = 1, lambda2 = 0.1)
 ##' print(m1)
 ##'
+##' @method print gcdnet
 ##' @export
 print.gcdnet <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   cat("\nCall: ", deparse(x$call), "\n\n")

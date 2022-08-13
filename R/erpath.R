@@ -1,4 +1,3 @@
-##' @export
 erpath <- function(x, y, nlam, flmin, ulam, isd, intr, eps, dfmax, pmax, jd, pf,
                    pf2, maxit, lam2, omega, nobs, nvars, vnames) {
 ###############################################################################
